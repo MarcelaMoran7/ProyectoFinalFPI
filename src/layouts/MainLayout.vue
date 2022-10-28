@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh Lpr lFf">
-    <q-header elevated>
+    <q-header elevated class="bg-yellow">
       <q-toolbar>
         <q-btn
           flat
@@ -8,14 +8,17 @@
           round
           icon="menu"
           aria-label="Menu"
+          color="black"
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title>
+        <div><q-icon name ="las la-bullhorn" size="2rem" color="black"/></div>
+
+        <q-toolbar-title class="text-dark" >
           Tienda CellPhone
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div></div>
       </q-toolbar>
     </q-header>
 
