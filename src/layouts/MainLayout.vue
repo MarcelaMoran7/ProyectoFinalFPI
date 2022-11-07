@@ -28,7 +28,7 @@
         </q-input>
         <q-space />
 
-        <q-btn  class=" q-ma-md mobile-hide" color="blue-grey-3" label="Inicio" />
+        <q-btn to="/" class=" q-ma-md mobile-hide" color="blue-grey-3" label="Inicio" />
         <q-space />
 
         <q-btn  class=" q-ma-sm mobile-hide" round color="blue-grey-3" icon="las la-plus" />
@@ -41,7 +41,7 @@
       show-if-above
       bordered
     >
-    <MenuFiltros @clickFiltro="clickFiltro"></MenuFiltros>
+    <MenuFiltros></MenuFiltros>
     </q-drawer>
 
     <q-page-container>
@@ -69,9 +69,6 @@ export default defineComponent({
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
-      },
-      clickFiltro () {
-        console.log('dlfjori')
       }
     }
   }

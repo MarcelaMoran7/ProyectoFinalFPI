@@ -21,7 +21,10 @@
         </template>
       </q-input>
       <q-btn @click="filtrarPrecios" flat round color="grey" icon="las la-search"/>
+      <q-btn @click="cargar" v-show="hayFiltroPrecio" rounded flat color="red" icon-right="las la-undo-alt" label="Limpiar filtro" class="q-pa-xs q-ma-xs" size="12px"/>
       </div>
+
+      <div><q-btn round color="black" icon="my_location" class="col-2 desktop-hide q-mt-md q-pa-md " /></div>
 
       <q-select @update:model-value="cambioSelect" class="col-6 desktop-hide q-ma-md" rounded outlined v-model="ordenarPor" :options="opcionesOrdenar" label="Ordenar por" />
 
@@ -41,17 +44,17 @@
 
     </div>
     <div class="row q-ma-md">
-      <q-card  class="my-card vtyu col-md-3 col-6 q-pa-sm"
+      <q-card  class="my-card vtyu col-md-3 col-6 q-pa-sm q-mt-sm"
       v-for="(item,key) in articulos" :key="key">
       <img src="https://cdn.quasar.dev/img/mountains.jpg">
 
       <q-card-section>
-        <div class="text-h6 text-center">{{item.precio}}</div>
+        <div class="text-h6 text-center">${{item.precio}}</div>
         {{item.titulo}}
       </q-card-section>
       <q-separator />
       <q-card-actions align="right">
-        <q-btn color="yellow-5">Detalles</q-btn>
+        <q-btn :to="'/articulo/' + item.id" color="warning" rounded>Detalles</q-btn>
       </q-card-actions>
     </q-card>
 
@@ -61,7 +64,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 
 const ordenarPor = ref('Precio')
 const opcionesOrdenar = ref(
@@ -73,17 +76,21 @@ const desde = ref(0)
 const hasta = ref(0)
 
 const articulosOriginal = [
-  { precio: 133, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 12 - 25' },
-  { precio: 122, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2021 - 11 - 24' },
-  { precio: 140, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2019 - 12 - 25' },
-  { precio: 132, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 25' },
-  { precio: 127, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 9 - 25' },
-  { precio: 135, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 8 - 25' },
-  { precio: 138, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 11 - 15' },
-  { precio: 25.01, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 5' }
+  { id: 'jsdfbhkslduh', sistema: 'Android', precio: 133, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 12 - 25' },
+  { id: 'jsdfbhksldih', sistema: 'Android', precio: 122, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2021 - 11 - 24' },
+  { id: 'jsdfbhksldoh', sistema: 'Android', precio: 140, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2019 - 12 - 25' },
+  { id: 'jsdfbhksldah', sistema: 'Android', precio: 132, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 25' },
+  { id: 'jsdfbhksldeh', sistema: 'Android', precio: 127, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 9 - 25' },
+  { id: 'jsdfbhksldjh', sistema: 'Android', precio: 135, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 8 - 25' },
+  { id: 'jsdfbhksldph', sistema: 'Android', precio: 138, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 11 - 15' },
+  { id: 'jsdfbhksldqh', sistema: 'Android', precio: 25.01, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 5' }
 ]
 
 const articulos = ref([])
+const hayFiltroPrecio = ref(false)
+const hayFiltro = computed(() => {
+  if (desde.value > 0 && hasta.value > 0) { return true } else { return false }
+})
 
 const Ordenar = () => {
   if (ordenarPor.value === 'Precio') {
@@ -109,22 +116,25 @@ const cambioSelect = (value) => {
 }
 
 const filtrarPrecios = () => {
-  filtrarMenu()
+  hayFiltroPrecio.value = true
   if (desde.value > 0 && hasta.value > 0) {
-    articulos.value.filter((item) => {
+    articulos.value = articulos.value.filter((item) => {
       if (item.precio >= desde.value && item.precio <= hasta.value) { return true } else { return false }
     })
   }
 }
 
-const filtrarMenu = () => {
-  console.log('Fghsdyevf,lwe')
+const cargar = () => {
+  hayFiltroPrecio.value = false
+  articulos.value = articulosOriginal.map((a) => {
+    return { ...a }
+  })
 }
 
 onMounted(() => {
-  articulosOriginal.forEach(item => {
-    articulos.value.push(item)
-  })
+  cargar()
+
+  console.log(hayFiltro.value)
 })
 
 </script>
