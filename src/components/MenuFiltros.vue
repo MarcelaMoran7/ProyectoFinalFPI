@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md ">
-    <fieldset>
+    <fieldset class="vtyu">
       <legend>MARCA</legend>
       <q-list bordered separator>
       <q-item dense v-for="(marcas, key) in marca" :key="'marc-' + key" clickable v-ripple>
@@ -13,7 +13,7 @@
       </q-item>
       </q-list>
     </fieldset>
-    <fieldset class="q-mt-md">
+    <fieldset class="q-mt-md vtyu">
       <legend>SISTEMAS</legend>
       <q-list bordered separator >
       <q-item dense v-for="(sistemas, key) in sistemas" :key="'sis-' + key" clickable v-ripple>
@@ -26,7 +26,7 @@
       </q-item>
       </q-list>
     </fieldset>
-    <fieldset class="q-mt-md">
+    <fieldset class="q-mt-md vtyu">
       <legend>PANTALLAS</legend>
       <q-list bordered separator>
       <q-item dense v-for="(pantallas, key) in pantallas" :key="'pant-' + key" clickable v-ripple>
@@ -39,6 +39,7 @@
       </q-item>
       </q-list>
     </fieldset>
+    <q-btn push color="white" text-color="blue-grey" label="Buscar" class="q-ma-md" icon="las la-search"/>
   </div>
 </template>
 
@@ -70,3 +71,10 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.vtyu
+  border-radius: 1rem
+  border: 5px solid blue-grey-10
+
+</style>

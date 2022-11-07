@@ -1,10 +1,10 @@
-<template>
+<template ref="articulosPrincipales">
   <div>
-    <div class="row justify-end">
+    <div class="row justify-center">
 
-      <div class="col-3 baurn-jkl">
+      <div class="col-4 row baurn-jkl mobile-hide">
         Precio:
-        <q-input class="row inline" type="number" rounded standout bottom-slots v-model.number="desde" label="Desde" dense>
+        <q-input class="col" type="number" rounded standout bottom-slots v-model.number="desde" label="Desde" dense>
         <template v-slot:prepend>
           <q-icon name="las la-dollar-sign" />
         </template >
@@ -12,7 +12,7 @@
           Precio desde:
         </template>
       </q-input>
-      <q-input class="row inline" type="number" rounded standout bottom-slots v-model.number="hasta" label="Hasta" dense>
+      <q-input class="col" type="number" rounded standout bottom-slots v-model.number="hasta" label="Hasta" dense>
         <template v-slot:prepend>
           <q-icon name="las la-dollar-sign" />
         </template >
@@ -20,11 +20,12 @@
           Precio hasta:
         </template>
       </q-input>
+      <q-btn @click="filtrarPrecios" flat round color="grey" icon="las la-search"/>
       </div>
 
       <q-select @update:model-value="cambioSelect" class="col-6 desktop-hide q-ma-md" rounded outlined v-model="ordenarPor" :options="opcionesOrdenar" label="Ordenar por" />
 
-      <div class="col-7 mobile-hide q-ma-lg">
+      <div class="col-7 mobile-hide q-ma-lg baurn-jkl neede">
         Ordenar por:
         <q-btn-toggle
         rounded
@@ -40,12 +41,12 @@
 
     </div>
     <div class="row q-ma-md">
-      <q-card  class="my-card col-md-3 col-6 q-pa-sm"
+      <q-card  class="my-card vtyu col-md-3 col-6 q-pa-sm"
       v-for="(item,key) in articulos" :key="key">
       <img src="https://cdn.quasar.dev/img/mountains.jpg">
 
       <q-card-section>
-        <div class="text-h6">{{item.precio}}</div>
+        <div class="text-h6 text-center">{{item.precio}}</div>
         {{item.titulo}}
       </q-card-section>
       <q-separator />
@@ -107,6 +108,19 @@ const cambioSelect = (value) => {
   Ordenar()
 }
 
+const filtrarPrecios = () => {
+  filtrarMenu()
+  if (desde.value > 0 && hasta.value > 0) {
+    articulos.value.filter((item) => {
+      if (item.precio >= desde.value && item.precio <= hasta.value) { return true } else { return false }
+    })
+  }
+}
+
+const filtrarMenu = () => {
+  console.log('Fghsdyevf,lwe')
+}
+
 onMounted(() => {
   articulosOriginal.forEach(item => {
     articulos.value.push(item)
@@ -123,11 +137,12 @@ onMounted(() => {
   border-radius: 2rem
   width: auto
   padding: 10px 5px
-  margin:20px
+  margin-right:120px
+  margin-top:15px
 
 .neede
-  border: 1px solid black
+ margin-top: 20px
+
+.vtyu
   border-radius: 2rem
-  width: auto
-  padding: 5px
 </style>

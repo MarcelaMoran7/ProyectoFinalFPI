@@ -20,7 +20,7 @@
           Tienda CellPhone
         </q-toolbar-title>
 
-        <q-input rounded class="GPL__toolbar-input col-9 col-lg-5" dense standout="bg-grey" v-model="search" placeholder="Search">
+        <q-input rounded class="GPL__toolbar-input col-9 col-lg-5" dense standout="bg-blue-grey-3" v-model="search" placeholder="Search">
           <template v-slot:prepend>
             <q-icon v-if="search === ''" name="search" />
             <q-icon v-else name="clear" class="cursor-pointer" @click="search = ''" />
@@ -28,10 +28,10 @@
         </q-input>
         <q-space />
 
-        <q-btn  class=" q-ma-md mobile-hide" color="brown-5" label="Inicio" />
+        <q-btn  class=" q-ma-md mobile-hide" color="blue-grey-3" label="Inicio" />
         <q-space />
 
-        <q-btn  class=" q-ma-sm mobile-hide" round color="grey" icon="las la-plus" />
+        <q-btn  class=" q-ma-sm mobile-hide" round color="blue-grey-3" icon="las la-plus" />
         <div><q-btn class=" q-ma-sm mobile-hide" flat round color="dark" icon="shopping_cart" size="20px"/></div>
       </q-toolbar>
     </q-header>
@@ -41,7 +41,7 @@
       show-if-above
       bordered
     >
-    <MenuFiltros></MenuFiltros>
+    <MenuFiltros @clickFiltro="clickFiltro"></MenuFiltros>
     </q-drawer>
 
     <q-page-container>
@@ -69,6 +69,9 @@ export default defineComponent({
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
+      },
+      clickFiltro () {
+        console.log('dlfjori')
       }
     }
   }
