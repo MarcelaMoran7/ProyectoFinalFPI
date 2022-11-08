@@ -48,7 +48,7 @@ import { ref } from 'vue'
 export default {
   setup () {
     // Opciones del sistema operativo
-    const Sistema = ref(null)
+    const Sistema = ref('Select Option')
     const opcionesSistema = ['Select Option', 'Android', 'Ios', 'Windows', 'Linux']
     return {
       estadoProducto: ref('Nuevo'),

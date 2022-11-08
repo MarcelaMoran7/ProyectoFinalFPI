@@ -46,12 +46,12 @@
 
       <!--Inicio, Agregar imagenes del nuevo producto "parte inferior izquierda" -->
       <div class="col-12 col-md-7 order-xs-first order-md-last">
-        <nuevas-imagenes /> <!-- Referencia al componente NuevasImagenes.vue ubicado en components -->
+      <nuevas-imagenes /> <!-- Referencia al componente NuevasImagenes.vue ubicado en components -->
       </div> <!-- Fin Agregar imagenes "Parte Inferior Izquierda" -->
 
       <!-- Inicio Parte inferior derecha -->
       <div class="col-12 col-md-5 q-pa-md-xl order-xs-last">
-        <precio-new class="gt-sm q-mx-lg" /> <!-- Referencia Al Archivo PrecioNew.vue ubicado En components -->
+        <precio-new class="gt-sm q-mx-lg" />  <!-- Referencia Al Archivo PrecioNew.vue ubicado En components -->
         <!-- Botones Cancelar y Crear -->
         <div class=" q-pa-xs-lg q-gutter-md float-right">
           <q-btn class="q-py-md q-px-md " color="red" icon="las la-times-circle" label="Cancelar" />
