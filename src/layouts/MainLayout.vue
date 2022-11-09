@@ -31,7 +31,7 @@
         <q-btn to="/" class=" q-ma-md mobile-hide" color="blue-grey-3" label="Inicio" />
         <q-space />
 
-        <q-btn  class=" q-ma-sm mobile-hide" round color="blue-grey-3" icon="las la-plus" />
+        <q-btn :to="'/NewAd'" class=" q-ma-sm mobile-hide" round color="blue-grey-3" icon="las la-plus" />
         <div><q-btn class=" q-ma-sm mobile-hide" flat round color="dark" icon="shopping_cart" size="20px"/></div>
       </q-toolbar>
     </q-header>
