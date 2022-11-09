@@ -3,6 +3,7 @@
     <div class="row justify-center">
 
       <div class="col-4 row baurn-jkl mobile-hide">
+        <div><q-btn @click="cargar" v-show="hayFiltroPrecio" rounded flat color="red" icon-right="las la-undo-alt" label="Limpiar filtro" class="q-pa-xs q-ma-xs" size="12px"/></div>
         Precio:
         <q-input class="col" type="number" rounded standout bottom-slots v-model.number="desde" label="Desde" dense>
         <template v-slot:prepend>
@@ -20,8 +21,8 @@
           Precio hasta:
         </template>
       </q-input>
-      <q-btn @click="filtrarPrecios" flat round color="grey" icon="las la-search"/>
-      <q-btn @click="cargar" v-show="hayFiltroPrecio" rounded flat color="red" icon-right="las la-undo-alt" label="Limpiar filtro" class="q-pa-xs q-ma-xs" size="12px"/>
+      <div><q-btn @click="filtrarPrecios" flat round color="grey" icon="las la-search"/></div>
+
       </div>
 
       <div><q-btn round color="black" icon="my_location" class="col-2 desktop-hide q-mt-md q-pa-md " /></div>
@@ -64,8 +65,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref, computed, watch } from 'vue'
+import { useCounterStore } from 'stores/dataglobal'
 
+const store = useCounterStore()
 const ordenarPor = ref('Precio')
 const opcionesOrdenar = ref(
   [{ label: 'Precio', value: 'Precio' },
@@ -76,20 +79,28 @@ const desde = ref(0)
 const hasta = ref(0)
 
 const articulosOriginal = [
-  { id: 'jsdfbhkslduh', sistema: 'Android', precio: 133, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 12 - 25' },
-  { id: 'jsdfbhksldih', sistema: 'Android', precio: 122, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2021 - 11 - 24' },
-  { id: 'jsdfbhksldoh', sistema: 'Android', precio: 140, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2019 - 12 - 25' },
-  { id: 'jsdfbhksldah', sistema: 'Android', precio: 132, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 25' },
-  { id: 'jsdfbhksldeh', sistema: 'Android', precio: 127, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 9 - 25' },
-  { id: 'jsdfbhksldjh', sistema: 'Android', precio: 135, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 8 - 25' },
-  { id: 'jsdfbhksldph', sistema: 'Android', precio: 138, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 11 - 15' },
-  { id: 'jsdfbhksldqh', sistema: 'Android', precio: 25.01, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 5' }
+  { id: 'jsdfbhkslduh', sistema: 'Android', precio: 133, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 12 - 25', marca: 'Iphone' },
+  { id: 'jsdfbhksldih', sistema: 'Android', precio: 122, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2021 - 11 - 24', marca: 'Samsung' },
+  { id: 'jsdfbhksldoh', sistema: 'Android', precio: 140, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2019 - 12 - 25', marca: 'Nokia' },
+  { id: 'jsdfbhksldah', sistema: 'Android', precio: 132, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 25', marca: 'Huawei' },
+  { id: 'jsdfbhksldeh', sistema: 'Android', precio: 127, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 9 - 25', marca: 'Xiaomi' },
+  { id: 'jsdfbhksldjh', sistema: 'Android', precio: 135, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 8 - 25', marca: 'Iphone' },
+  { id: 'jsdfbhksldph', sistema: 'Android', precio: 138, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 11 - 15', marca: 'Samsung' },
+  { id: 'jsdfbhksldqh', sistema: 'Android', precio: 25.01, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 5', marca: 'Huawei' }
 ]
 
 const articulos = ref([])
 const hayFiltroPrecio = ref(false)
 const hayFiltro = computed(() => {
   if (desde.value > 0 && hasta.value > 0) { return true } else { return false }
+})
+const hayFiltroMenu = computed(() => {
+  return store.filtroMarcas.length
+})
+
+watch(hayFiltroMenu, (nuevo, viejo) => {
+  console.log('observador')
+  filtrarPorMenu()
 })
 
 const Ordenar = () => {
@@ -124,8 +135,19 @@ const filtrarPrecios = () => {
   }
 }
 
+const filtrarPorMenu = () => {
+  if (store.filtroMarcas.length > 0) {
+    hayFiltroPrecio.value = true
+    articulos.value = articulos.value.filter((item) => {
+      if (store.filtroMarcas.includes(item.marca)) { return true } else { return false }
+    })
+  }
+}
+
 const cargar = () => {
   hayFiltroPrecio.value = false
+  store.filtroMarcas = []
+  articulos.value = []
   articulos.value = articulosOriginal.map((a) => {
     return { ...a }
   })

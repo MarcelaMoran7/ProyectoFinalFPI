@@ -39,34 +39,48 @@
       </q-item>
       </q-list>
     </fieldset>
-    <q-btn push color="white" text-color="blue-grey" label="Buscar" class="q-ma-md" icon="las la-search"/>
+    <q-btn @click="filtrar" push color="white" text-color="blue-grey" label="Buscar" class="q-ma-md" icon="las la-search"/>
+    <p>{{store.filtroSistemas}}</p>
   </div>
 </template>
 
 <script>
 import { ref } from 'vue'
+import { useCounterStore } from 'stores/dataglobal'
 
+const store = useCounterStore()
+const marca = ref([
+  { val: false, label: 'Samsung', cantidad: 15 },
+  { val: false, label: 'Huawei', cantidad: 10 },
+  { val: false, label: 'Nokia', cantidad: 56 },
+  { val: false, label: 'Iphone', cantidad: 4 },
+  { val: false, label: 'Xiamoi', cantidad: 4 }
+])
+const sistemas = ref([
+  { val: false, label: 'Android', cantidad: 15 },
+  { val: false, label: 'Windows', cantidad: 10 },
+  { val: false, label: 'IOS', cantidad: 56 }
+])
+const filtrar = () => {
+  const valMarcas = []
+  marca.value.forEach((item) => {
+    if (item.val) { valMarcas.push(item.label) }
+  })
+  store.filtroMarcas = valMarcas
+}
 export default {
   setup () {
     return {
       check1: ref(false),
-      marca: ref([
-        { val: false, label: 'Samsung', cantidad: 15 },
-        { val: false, label: 'Huawei', cantidad: 10 },
-        { val: false, label: 'Nokia', cantidad: 56 },
-        { val: false, label: 'Iphone', cantidad: 4 },
-        { val: false, label: 'Xiamoi', cantidad: 4 }
-      ]),
-      sistemas: ref([
-        { val: false, label: 'Android', cantidad: 15 },
-        { val: false, label: 'Windows', cantidad: 10 },
-        { val: false, label: 'IOS', cantidad: 56 }
-      ]),
+      store,
+      marca,
+      sistemas,
       pantallas: ref([
         { val: false, label: '6.0' },
         { val: false, label: '5.5' },
         { val: false, label: '5.0' }
-      ])
+      ]),
+      filtrar
     }
   }
 }
