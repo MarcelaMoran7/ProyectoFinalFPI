@@ -4,7 +4,8 @@ export const useCounterStore = defineStore('dataglobal', {
   state: () => ({
     counter: 0,
     filtroMarcas: [],
-    filtroSistemas: []
+    filtroSistemas: [],
+    filtroPantallas: []
   }),
 
   getters: {

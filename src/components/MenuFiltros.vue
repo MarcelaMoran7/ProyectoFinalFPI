@@ -60,6 +60,11 @@ const sistemas = ref([
   { val: false, label: 'Windows', cantidad: 10 },
   { val: false, label: 'IOS', cantidad: 56 }
 ])
+const pantallas = ref([
+  { val: false, label: '6.0' },
+  { val: false, label: '5.5' },
+  { val: false, label: '5.0' }
+])
 const filtrar = () => {
   const valMarcas = []
   marca.value.forEach((item) => {
@@ -72,6 +77,12 @@ const filtrar = () => {
     if (item.val) { valSistemas.push(item.label) }
   })
   store.filtroSistemas = valSistemas
+
+  const valPantallas = []
+  pantallas.value.forEach((item) => {
+    if (item.val) { valPantallas.push(item.label) }
+  })
+  store.filtroPantallas = valPantallas
 }
 export default {
   setup () {
@@ -80,11 +91,7 @@ export default {
       store,
       marca,
       sistemas,
-      pantallas: ref([
-        { val: false, label: '6.0' },
-        { val: false, label: '5.5' },
-        { val: false, label: '5.0' }
-      ]),
+      pantallas,
       filtrar
     }
   }
