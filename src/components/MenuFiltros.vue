@@ -40,7 +40,6 @@
       </q-list>
     </fieldset>
     <q-btn @click="filtrar" push color="white" text-color="blue-grey" label="Buscar" class="q-ma-md" icon="las la-search"/>
-    <p>{{store.filtroSistemas}}</p>
   </div>
 </template>
 
@@ -67,6 +66,12 @@ const filtrar = () => {
     if (item.val) { valMarcas.push(item.label) }
   })
   store.filtroMarcas = valMarcas
+
+  const valSistemas = []
+  sistemas.value.forEach((item) => {
+    if (item.val) { valSistemas.push(item.label) }
+  })
+  store.filtroSistemas = valSistemas
 }
 export default {
   setup () {

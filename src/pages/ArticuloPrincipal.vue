@@ -80,13 +80,13 @@ const hasta = ref(0)
 
 const articulosOriginal = [
   { id: 'jsdfbhkslduh', sistema: 'Android', precio: 133, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 12 - 25', marca: 'Iphone' },
-  { id: 'jsdfbhksldih', sistema: 'Android', precio: 122, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2021 - 11 - 24', marca: 'Samsung' },
-  { id: 'jsdfbhksldoh', sistema: 'Android', precio: 140, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2019 - 12 - 25', marca: 'Nokia' },
+  { id: 'jsdfbhksldih', sistema: 'IOS', precio: 122, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2021 - 11 - 24', marca: 'Samsung' },
+  { id: 'jsdfbhksldoh', sistema: 'Windows', precio: 140, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2019 - 12 - 25', marca: 'Nokia' },
   { id: 'jsdfbhksldah', sistema: 'Android', precio: 132, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 25', marca: 'Huawei' },
-  { id: 'jsdfbhksldeh', sistema: 'Android', precio: 127, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 9 - 25', marca: 'Xiaomi' },
-  { id: 'jsdfbhksldjh', sistema: 'Android', precio: 135, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 8 - 25', marca: 'Iphone' },
+  { id: 'jsdfbhksldeh', sistema: 'IOS', precio: 127, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 9 - 25', marca: 'Xiaomi' },
+  { id: 'jsdfbhksldjh', sistema: 'Windows', precio: 135, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 8 - 25', marca: 'Iphone' },
   { id: 'jsdfbhksldph', sistema: 'Android', precio: 138, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 11 - 15', marca: 'Samsung' },
-  { id: 'jsdfbhksldqh', sistema: 'Android', precio: 25.01, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 5', marca: 'Huawei' }
+  { id: 'jsdfbhksldqh', sistema: 'IOS', precio: 25.01, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 5', marca: 'Huawei' }
 ]
 
 const articulos = ref([])
@@ -96,6 +96,14 @@ const hayFiltro = computed(() => {
 })
 const hayFiltroMenu = computed(() => {
   return store.filtroMarcas.length
+})
+const hayFiltroMenuSis = computed(() => {
+  return store.filtroSistemas.length
+})
+
+watch(hayFiltroMenuSis, (nuevo, viejo) => {
+  console.log('observador')
+  filtrarPorMenuSis()
 })
 
 watch(hayFiltroMenu, (nuevo, viejo) => {
@@ -144,9 +152,19 @@ const filtrarPorMenu = () => {
   }
 }
 
+const filtrarPorMenuSis = () => {
+  if (store.filtroSistemas.length > 0) {
+    hayFiltroPrecio.value = true
+    articulos.value = articulos.value.filter((item) => {
+      if (store.filtroSistemas.includes(item.sistema)) { return true } else { return false }
+    })
+  }
+}
+
 const cargar = () => {
   hayFiltroPrecio.value = false
   store.filtroMarcas = []
+  store.filtroSistemas = []
   articulos.value = []
   articulos.value = articulosOriginal.map((a) => {
     return { ...a }
