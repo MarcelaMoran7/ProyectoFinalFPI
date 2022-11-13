@@ -1,8 +1,18 @@
 <template ref="articulosPrincipales">
   <div>
     <div class="row justify-center">
+      <div class="q-mt-lg q-ml-sm">
+        <q-toggle
+        v-model="leftDrawerOpen"
+        color="yellow"
+        label="Nuevo:"
+        left-label
+        class="mobile-hide"
+        @click="toggleLeftDrawer"
+      />
+      </div>
 
-      <div class="col-4 row baurn-jkl mobile-hide">
+      <div class="col-6 row  mobile-hide q-mt-lg q-ml-sm">
         <div><q-btn @click="cargar" v-show="hayFiltroPrecio" rounded flat color="red" icon-right="las la-undo-alt" label="Limpiar filtro" class="q-pa-xs q-ma-xs" size="12px"/></div>
         Precio:
         <q-input class="col" type="number" rounded standout bottom-slots v-model.number="desde" label="Desde" dense>
@@ -25,11 +35,11 @@
 
       </div>
 
-      <div><q-btn round color="black" icon="my_location" class="col-2 desktop-hide q-mt-md q-pa-md " /></div>
+      <div><q-btn  @click="toggleLeftDrawer" round color="black" icon="las la-filter" class="col-2 desktop-hide q-mt-md q-pa-md " /></div>
 
       <q-select @update:model-value="cambioSelect" class="col-6 desktop-hide q-ma-md" rounded outlined v-model="ordenarPor" :options="opcionesOrdenar" label="Ordenar por" />
 
-      <div class="col-7 mobile-hide q-ma-lg baurn-jkl neede">
+      <div class="col-4 mobile-hide q-ma-lg ">
         Ordenar por:
         <q-btn-toggle
         rounded
@@ -62,11 +72,32 @@
     </div>
   </div>
 
+  <div class="q-pa-lg flex flex-center">
+    <q-pagination
+        v-model="current"
+        max="5"
+        direction-links
+        outline
+        color="orange"
+        active-design="unelevated"
+        active-color="brown"
+        active-text-color="orange"
+      />
+  </div>
+  <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+    >
+    <MenuFiltros></MenuFiltros>
+    </q-drawer>
+
 </template>
 
 <script setup>
 import { onMounted, ref, computed, watch } from 'vue'
 import { useCounterStore } from 'stores/dataglobal'
+import MenuFiltros from 'src/components/MenuFiltros.vue'
 
 const store = useCounterStore()
 const ordenarPor = ref('Precio')
@@ -77,7 +108,8 @@ const opcionesOrdenar = ref(
 
 const desde = ref(0)
 const hasta = ref(0)
-
+const current = ref(3)
+const leftDrawerOpen = ref(false)
 const articulosOriginal = [
   { id: 'jsdfbhkslduh', sistema: 'Android', precio: 133, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 12 - 25', marca: 'Iphone', pantalla: '6.0' },
   { id: 'jsdfbhksldih', sistema: 'IOS', precio: 122, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2021 - 11 - 24', marca: 'Samsung', pantalla: '5.5' },
@@ -118,6 +150,9 @@ watch(hayFiltroMenu, (nuevo, viejo) => {
   filtrarPorMenu()
 })
 
+const toggleLeftDrawer = () => {
+  leftDrawerOpen.value = !leftDrawerOpen.value
+}
 const Ordenar = () => {
   if (ordenarPor.value === 'Precio') {
     articulos.value.sort((a, b) => a.precio - b.precio)
