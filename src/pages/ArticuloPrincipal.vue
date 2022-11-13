@@ -12,7 +12,7 @@
       />
       </div>
 
-      <div class="col-6 row  mobile-hide q-mt-lg q-ml-sm">
+      <div class="col-6 row col-md-6 mobile-hide q-mt-lg q-ml-sm">
         <div><q-btn @click="cargar" v-show="hayFiltroPrecio" rounded flat color="red" icon-right="las la-undo-alt" label="Limpiar filtro" class="q-pa-xs q-ma-xs" size="12px"/></div>
         Precio:
         <q-input class="col" type="number" rounded standout bottom-slots v-model.number="desde" label="Desde" dense>
@@ -35,11 +35,11 @@
 
       </div>
 
-      <div><q-btn  @click="toggleLeftDrawer" round color="black" icon="las la-filter" class="col-2 desktop-hide q-mt-md q-pa-md " /></div>
+      <div><q-btn  @click="toggleLeftDrawer" round color="black" icon="las la-filter" class="col-2 desktop-hide q-mt-md q-pa-md " size="sm"/></div>
 
       <q-select @update:model-value="cambioSelect" class="col-6 desktop-hide q-ma-md" rounded outlined v-model="ordenarPor" :options="opcionesOrdenar" label="Ordenar por" />
 
-      <div class="col-4 mobile-hide q-ma-lg ">
+      <div class="col-4 col-md-4 mobile-hide q-ma-lg ">
         Ordenar por:
         <q-btn-toggle
         rounded
