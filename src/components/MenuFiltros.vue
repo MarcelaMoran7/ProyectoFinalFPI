@@ -44,22 +44,31 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useCounterStore } from 'stores/dataglobal'
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from '../boot/database'
+
+const cargarDatosmarca = async function () {
+  // cargando los datos
+  const querySnapshot = await getDocs(collection(db, 'marca'))
+  querySnapshot.forEach((doc) => {
+    console.log(doc.data())
+    marca.value.push({ val: false, label: doc.data().nombre, cantidad: 15 })
+  })
+
+  // cargando los sistemas
+
+  const querySnapshot1 = await getDocs(collection(db, 'sistemas'))
+  querySnapshot1.forEach((doc) => {
+    console.log(doc.data())
+    sistemas.value.push({ val: false, label: doc.data().nombre, cantidad: 15 })
+  })
+}
 
 const store = useCounterStore()
-const marca = ref([
-  { val: false, label: 'Samsung', cantidad: 15 },
-  { val: false, label: 'Huawei', cantidad: 10 },
-  { val: false, label: 'Nokia', cantidad: 56 },
-  { val: false, label: 'Iphone', cantidad: 4 },
-  { val: false, label: 'Xiamoi', cantidad: 4 }
-])
-const sistemas = ref([
-  { val: false, label: 'Android', cantidad: 15 },
-  { val: false, label: 'Windows', cantidad: 10 },
-  { val: false, label: 'IOS', cantidad: 56 }
-])
+const marca = ref([])
+const sistemas = ref([])
 const pantallas = ref([
   { val: false, label: '6.0' },
   { val: false, label: '5.5' },
@@ -86,13 +95,17 @@ const filtrar = () => {
 }
 export default {
   setup () {
+    onMounted(() => {
+      cargarDatosmarca()
+    })
     return {
       check1: ref(false),
       store,
       marca,
       sistemas,
       pantallas,
-      filtrar
+      filtrar,
+      cargarDatosmarca
     }
   }
 }
