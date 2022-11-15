@@ -54,8 +54,8 @@
       </div>
 
     </div>
-    <div class="row q-ma-md">
-      <q-card  class="my-card vtyu col-md-3 col-6 q-pa-sm q-mt-sm"
+    <div class="row q-ma-md ">
+      <q-card  class="my-card vtyu col-md-3 col-6 q-pa-sm q-mt-sm shadow-4"
       v-for="(item,key) in articulos" :key="key">
       <img src="https://cdn.quasar.dev/img/mountains.jpg">
 
@@ -242,9 +242,13 @@ onMounted(() => {
   margin-right:120px
   margin-top:15px
 
+.my-card:hover
+  transform: scale(1.1)
+  transition: transform .5s
 .neede
  margin-top: 20px
 
 .vtyu
   border-radius: 2rem
+
 </style>

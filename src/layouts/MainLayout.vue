@@ -10,15 +10,20 @@
           aria-label="Menu"
           color="black"
           @click="toggleLeftDrawer"
+          class="desktop-hide"
         />
-
         <q-avatar class="mobile-hide">
           <q-icon name ="las la-bullhorn" size="2rem" color="black"/>
         </q-avatar>
-
-        <q-toolbar-title class="text-dark mobile-hide" >
+        <transition
+        appear
+        enter-active-class="animated bounceInDown slow"
+        leave-active-class="animated flipOutY slow">
+       <q-toolbar-title class="text-dark mobile-hide" >
           Tienda CellPhone
         </q-toolbar-title>
+
+        </transition>
 
         <q-input rounded class="GPL__toolbar-input col-9 col-lg-5" dense standout="bg-blue-grey-3" v-model="search" placeholder="Search">
           <template v-slot:prepend>
@@ -36,14 +41,6 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-    <MenuFiltros></MenuFiltros>
-    </q-drawer>
-
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -52,20 +49,15 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import MenuFiltros from 'components/MenuFiltros.vue'
 
 export default defineComponent({
   name: 'MainLayout',
-
-  components: {
-    MenuFiltros
-  },
 
   setup () {
     const leftDrawerOpen = ref(false)
 
     return {
-      MenuFiltros,
+
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value

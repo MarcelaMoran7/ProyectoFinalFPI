@@ -40,12 +40,11 @@
       </q-list>
     </fieldset>
     <q-btn @click="filtrar" push color="white" text-color="blue-grey" label="Buscar" class="q-ma-md" icon="las la-search"/>
-    <q-btn @click="cargarDatos" outline style="color: goldenrod;" label="Filtrar" />
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useCounterStore } from 'stores/dataglobal'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../boot/database'
@@ -100,6 +99,10 @@ const filtrar = () => {
 }
 export default {
   setup () {
+    onMounted(() => {
+      cargarDatos()
+    })
+
     return {
       check1: ref(false),
       store,
