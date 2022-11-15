@@ -1,7 +1,6 @@
 <template ref="articulosPrincipales">
   <div>
     <div class="row justify-center">
-
       <div class="col-4 row baurn-jkl mobile-hide">
         <div><q-btn @click="cargar" v-show="hayFiltroPrecio" rounded flat color="red" icon-right="las la-undo-alt" label="Limpiar filtro" class="q-pa-xs q-ma-xs" size="12px"/></div>
         Precio:

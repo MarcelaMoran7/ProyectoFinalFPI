@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh Lpr lFf">
-    <q-header elevated class="bg-yellow-5">
+    <q-header elevated class="bg-yellow-5" v-if="!mostrarDrawerYHeader || this.$route.path === '/VerAnuncio'">
       <q-toolbar>
         <q-btn
           flat
@@ -31,7 +31,7 @@
         <q-btn to="/" class=" q-ma-md mobile-hide" color="blue-grey-3" label="Inicio" />
         <q-space />
 
-        <q-btn :to="'/NewAd'" class=" q-ma-sm mobile-hide" round color="blue-grey-3" icon="las la-plus" />
+        <q-btn :to="'/Newad'" class=" q-ma-sm mobile-hide" round color="blue-grey-3" icon="las la-plus" />
         <div><q-btn class=" q-ma-sm mobile-hide" flat round color="dark" icon="shopping_cart" size="20px"/></div>
       </q-toolbar>
     </q-header>
@@ -40,8 +40,12 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
+      v-if="!mostrarDrawerYHeader"
     >
-    <MenuFiltros></MenuFiltros>
+
+    <div v-if="drawerInicio" ><MenuFiltros></MenuFiltros></div>
+    <div v-else><MenuMobile></MenuMobile></div>
+
     </q-drawer>
 
     <q-page-container>
@@ -53,12 +57,14 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import MenuFiltros from 'components/MenuFiltros.vue'
+import MenuMobile from 'components/MenuMobile.vue'
 
 export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    MenuFiltros
+    MenuFiltros,
+    MenuMobile
   },
 
   setup () {
@@ -66,10 +72,22 @@ export default defineComponent({
 
     return {
       MenuFiltros,
+      MenuMobile,
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       }
+    }
+  },
+  methods: {
+
+  },
+  computed: {
+    mostrarDrawerYHeader () {
+      return (this.$route.path === '/Newad' && screen.width >= 1023) || (this.$route.path === '/VerAnuncio' && screen.width >= 1023)
+    },
+    drawerInicio () {
+      return (this.$route.path === '/' && screen.width >= 1023)
     }
   }
 })
