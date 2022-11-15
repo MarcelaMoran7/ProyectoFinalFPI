@@ -40,21 +40,22 @@
       </q-list>
     </fieldset>
     <q-btn @click="filtrar" push color="white" text-color="blue-grey" label="Buscar" class="q-ma-md" icon="las la-search"/>
+    <q-btn @click="cargarDatos" outline style="color: goldenrod;" label="Filtrar" />
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useCounterStore } from 'stores/dataglobal'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../boot/database'
 
-const cargarDatosmarca = async function () {
+const cargarDatos = async function () {
   // cargando los datos
   const querySnapshot = await getDocs(collection(db, 'marca'))
   querySnapshot.forEach((doc) => {
     console.log(doc.data())
-    marca.value.push({ val: false, label: doc.data().nombre, cantidad: 15 })
+    marca.value.push({ val: false, label: doc.data().nombre, cantidad: doc.data().cantidad })
   })
 
   // cargando los sistemas
@@ -62,18 +63,22 @@ const cargarDatosmarca = async function () {
   const querySnapshot1 = await getDocs(collection(db, 'sistemas'))
   querySnapshot1.forEach((doc) => {
     console.log(doc.data())
-    sistemas.value.push({ val: false, label: doc.data().nombre, cantidad: 15 })
+    sistemas.value.push({ val: false, label: doc.data().nombre, cantidad: doc.data().cantidad })
+  })
+
+  // cargando pantallas
+
+  const querySnapshot2 = await getDocs(collection(db, 'pantallas'))
+  querySnapshot2.forEach((doc) => {
+    console.log(doc.data())
+    pantallas.value.push({ val: false, label: doc.data().nombre })
   })
 }
 
 const store = useCounterStore()
 const marca = ref([])
 const sistemas = ref([])
-const pantallas = ref([
-  { val: false, label: '6.0' },
-  { val: false, label: '5.5' },
-  { val: false, label: '5.0' }
-])
+const pantallas = ref([])
 const filtrar = () => {
   const valMarcas = []
   marca.value.forEach((item) => {
@@ -95,9 +100,6 @@ const filtrar = () => {
 }
 export default {
   setup () {
-    onMounted(() => {
-      cargarDatosmarca()
-    })
     return {
       check1: ref(false),
       store,
@@ -105,7 +107,7 @@ export default {
       sistemas,
       pantallas,
       filtrar,
-      cargarDatosmarca
+      cargarDatos
     }
   }
 }

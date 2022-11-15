@@ -65,7 +65,7 @@
       </q-card-section>
       <q-separator />
       <q-card-actions align="right">
-        <q-btn :to="'/articulo/' + item.id" color="warning" rounded>Detalles</q-btn>
+        <q-btn :to="'/articulo/:idArticulo' + item.id" color="warning" rounded>Detalles</q-btn>
       </q-card-actions>
     </q-card>
 

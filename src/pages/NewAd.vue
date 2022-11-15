@@ -55,7 +55,7 @@
         <!-- Botones Cancelar y Crear -->
         <div class=" q-pa-xs-lg q-gutter-md float-right q-ma-md">
           <q-btn class="q-py-md q-px-md " color="red" icon="las la-times-circle" label="Cancelar" />
-          <q-btn class="q-py-md q-px-md " color="secondary" icon="las la-save" label="Crear" />
+          <q-btn @click="guardarArticulo" class="q-py-md q-px-md " color="secondary" icon="las la-save" label="Crear" />
         </div>
       </div> <!-- Fin Parte inferior derecha -->
 

@@ -2,6 +2,15 @@
   <q-layout view="hHh Lpr lFf">
     <q-header elevated class="bg-yellow-5">
       <q-toolbar>
+        <q-btn
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          color="black"
+          @click="toggleLeftDrawer"
+        />
 
         <q-avatar class="mobile-hide">
           <q-icon name ="las la-bullhorn" size="2rem" color="black"/>

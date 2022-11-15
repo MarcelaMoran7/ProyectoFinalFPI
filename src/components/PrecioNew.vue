@@ -3,7 +3,7 @@
 
     <legend>PRECIO</legend>
 
-    <q-input filled bottom-slots v-model="text" label="Ingrese el precio" label-color="yellow-9"  :dense="dense">
+    <q-input ref="controlesA" type="number" filled bottom-slots v-model.number="text" label="Ingrese el precio" label-color="yellow-9"  :dense="dense">
       <template v-slot:prepend>
         <q-icon name="las la-dollar-sign" />
       </template>
@@ -16,4 +16,5 @@
 </template>
 
 <script>
+
 </script>
