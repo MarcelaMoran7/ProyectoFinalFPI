@@ -53,9 +53,9 @@
       <div class="col-12 col-md-5 q-pa-md-xl order-xs-last">
         <precio-new class="gt-sm q-mx-lg" />  <!-- Referencia Al Archivo PrecioNew.vue ubicado En components -->
         <!-- Botones Cancelar y Crear -->
-        <div class=" q-pa-xs-md q-gutter-sm float-right">
-          <q-btn class="q-py-md q-px-sm " color="red" icon="las la-times-circle" label="Cancelar" />
-          <q-btn class="q-py-md q-px-md " color="secondary" icon="las la-save" label="Crear" />
+        <div class=" q-pa-xs-lg q-gutter-md float-right q-ma-md">
+          <q-btn class="q-py-md q-px-md " color="red" icon="las la-times-circle" label="Cancelar" />
+          <q-btn @click="guardarArticulo" class="q-py-md q-px-md " color="secondary" icon="las la-save" label="Crear" />
         </div>
       </div> <!-- Fin Parte inferior derecha -->
 

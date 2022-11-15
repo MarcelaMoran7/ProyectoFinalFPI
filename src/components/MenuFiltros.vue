@@ -40,47 +40,77 @@
       </q-list>
     </fieldset>
     <q-btn @click="filtrar" push color="white" text-color="blue-grey" label="Buscar" class="q-ma-md" icon="las la-search"/>
-    <p>{{store.filtroSistemas}}</p>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useCounterStore } from 'stores/dataglobal'
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from '../boot/database'
+
+const cargarDatos = async function () {
+  // cargando los datos
+  const querySnapshot = await getDocs(collection(db, 'marca'))
+  querySnapshot.forEach((doc) => {
+    console.log(doc.data())
+    marca.value.push({ val: false, label: doc.data().nombre, cantidad: doc.data().cantidad })
+  })
+
+  // cargando los sistemas
+
+  const querySnapshot1 = await getDocs(collection(db, 'sistemas'))
+  querySnapshot1.forEach((doc) => {
+    console.log(doc.data())
+    sistemas.value.push({ val: false, label: doc.data().nombre, cantidad: doc.data().cantidad })
+  })
+
+  // cargando pantallas
+
+  const querySnapshot2 = await getDocs(collection(db, 'pantallas'))
+  querySnapshot2.forEach((doc) => {
+    console.log(doc.data())
+    pantallas.value.push({ val: false, label: doc.data().nombre })
+  })
+}
 
 const store = useCounterStore()
-const marca = ref([
-  { val: false, label: 'Samsung', cantidad: 15 },
-  { val: false, label: 'Huawei', cantidad: 10 },
-  { val: false, label: 'Nokia', cantidad: 56 },
-  { val: false, label: 'Iphone', cantidad: 4 },
-  { val: false, label: 'Xiamoi', cantidad: 4 }
-])
-const sistemas = ref([
-  { val: false, label: 'Android', cantidad: 15 },
-  { val: false, label: 'Windows', cantidad: 10 },
-  { val: false, label: 'IOS', cantidad: 56 }
-])
+const marca = ref([])
+const sistemas = ref([])
+const pantallas = ref([])
 const filtrar = () => {
   const valMarcas = []
   marca.value.forEach((item) => {
     if (item.val) { valMarcas.push(item.label) }
   })
   store.filtroMarcas = valMarcas
+
+  const valSistemas = []
+  sistemas.value.forEach((item) => {
+    if (item.val) { valSistemas.push(item.label) }
+  })
+  store.filtroSistemas = valSistemas
+
+  const valPantallas = []
+  pantallas.value.forEach((item) => {
+    if (item.val) { valPantallas.push(item.label) }
+  })
+  store.filtroPantallas = valPantallas
 }
 export default {
   setup () {
+    onMounted(() => {
+      cargarDatos()
+    })
+
     return {
       check1: ref(false),
       store,
       marca,
       sistemas,
-      pantallas: ref([
-        { val: false, label: '6.0' },
-        { val: false, label: '5.5' },
-        { val: false, label: '5.0' }
-      ]),
-      filtrar
+      pantallas,
+      filtrar,
+      cargarDatos
     }
   }
 }

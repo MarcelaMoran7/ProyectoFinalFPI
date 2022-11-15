@@ -10,15 +10,20 @@
           aria-label="Menu"
           color="black"
           @click="toggleLeftDrawer"
+          class="desktop-hide"
         />
-
         <q-avatar class="mobile-hide">
           <q-icon name ="las la-bullhorn" size="2rem" color="black"/>
         </q-avatar>
-
-        <q-toolbar-title class="text-dark mobile-hide" >
+        <transition
+        appear
+        enter-active-class="animated bounceInDown slow"
+        leave-active-class="animated flipOutY slow">
+       <q-toolbar-title class="text-dark mobile-hide" >
           Tienda CellPhone
         </q-toolbar-title>
+
+        </transition>
 
         <q-input rounded class="GPL__toolbar-input col-9 col-lg-5" dense standout="bg-blue-grey-3" v-model="search" placeholder="Search">
           <template v-slot:prepend>

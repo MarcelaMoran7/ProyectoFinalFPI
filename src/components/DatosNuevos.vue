@@ -6,13 +6,12 @@
           <q-radio v-model="estadoProducto" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="Nuevo" label="Nuevo" color="orange" />
           <q-radio v-model="estadoProducto" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="Usado" label="Usado" color="orange" />
       </div>
-
       <div class="row">
         <div class="col-9">
-          <q-input class="q-mt-sm" filled label="Marca:" label-color="yellow-9" placeholder="Iphone" />
+          <q-input ref="controles1" class="q-mt-sm" filled label="Marca:" label-color="yellow-9" placeholder="Iphone" :rules="[val => !!val || 'Campo requerido']"/>
         </div>
         <div class="col-9">
-          <q-input class="q-mt-sm q-my-none" filled label="Modelo:" label-color="yellow-9" placeholder="6 Plus" />
+          <q-input ref="controles2" class="q-mt-sm q-my-none" filled label="Modelo:" label-color="yellow-9" placeholder="6 Plus" :rules="[val => !!val || 'Campo requerido']"/>
         </div>
         <div class="col-7">
           <q-input class="q-mt-sm" filled v-model="ph" label="Pantalla:" label-color="yellow-9" placeholder="5.5" />
@@ -38,6 +37,7 @@
       </div>
 
     </q-form>
+    <div class="row q-mt-md"><q-btn @click="reset" outline color="yellow-9" label="Limpiar" size="md"/></div>
 
   </div>
 </template>
@@ -50,9 +50,18 @@ export default {
     // Opciones del sistema operativo
     const Sistema = ref('Select Option')
     const opcionesSistema = ['Select Option', 'Android', 'Ios', 'Windows', 'Linux']
+    const controles1 = ref(null)
+    const controles2 = ref(null)
+
     return {
       estadoProducto: ref('Nuevo'),
       slide: ref(3),
+      controles1,
+      controles2,
+      reset () {
+        controles1.value.resetValidation()
+        controles2.value.resetValidation()
+      },
       // Opciones de la seleccion del sistema operativo
       Sistema,
       opcionesSistema
