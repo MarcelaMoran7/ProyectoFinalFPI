@@ -65,7 +65,7 @@
         {{item.titulo}}
       </q-card-section>
       <q-separator />
-      <q-card-actions align="right">
+      <q-card-actions aling="right">
         <q-btn :to="'/articulo/:idArticulo' + item.id" color="warning" rounded>Detalles</q-btn>
       </q-card-actions>
     </q-card>
