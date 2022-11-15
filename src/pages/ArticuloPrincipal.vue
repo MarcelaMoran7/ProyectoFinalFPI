@@ -54,7 +54,8 @@
       </div>
 
     </div>
-    <div class="row q-ma-md ">
+    <transition appear enter-active-class="animated lightSpeedInRight slow" leave-active-class="animated fadeInDownBig slow">
+      <div class="row q-ma-md ">
       <q-card  class="my-card vtyu col-md-3 col-6 q-pa-sm q-mt-sm shadow-4"
       v-for="(item,key) in articulos" :key="key">
       <img src="https://cdn.quasar.dev/img/mountains.jpg">
@@ -70,6 +71,9 @@
     </q-card>
 
     </div>
+
+    </transition>
+
   </div>
 
   <div class="q-pa-lg flex flex-center">
