@@ -76,7 +76,8 @@
 
   </div>
 
-  <div class="q-pa-lg flex flex-center">
+  <div class="row">
+    <div class=" col-6 q-pa-lg flex flex-center">
     <q-pagination
         v-model="current"
         max="5"
@@ -88,6 +89,11 @@
         active-text-color="orange"
       />
   </div>
+  <div class="col-1 q-ma-lg">
+    Articulos por pagina:<q-select filled v-model="model" :options="options" />
+  </div>
+  </div>
+
   <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
@@ -109,6 +115,9 @@ const opcionesOrdenar = ref(
   [{ label: 'Precio', value: 'Precio' },
     { label: 'Fecha', value: 'Fecha' }
   ])
+
+const model = ref(null)
+const options = ['2', '4', '5', '6', '8']
 
 const desde = ref(0)
 const hasta = ref(0)
