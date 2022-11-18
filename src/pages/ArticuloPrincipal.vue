@@ -1,21 +1,11 @@
 <template ref="articulosPrincipales">
   <div>
-    <div class="row justify-center">
-      <div class="q-mt-lg q-ml-sm">
-        <q-toggle
-        v-model="leftDrawerOpen"
-        color="yellow"
-        label="Nuevo:"
-        left-label
-        class="mobile-hide"
-        @click="toggleLeftDrawer"
-      />
-      </div>
+    <div class="row justify-center bg-yellow-2">
 
       <div class="col-6 row col-md-6 mobile-hide q-mt-lg q-ml-sm">
         <div><q-btn @click="cargar" v-show="hayFiltroPrecio" rounded flat color="red" icon-right="las la-undo-alt" label="Limpiar filtro" class="q-pa-xs q-ma-xs" size="12px"/></div>
         Precio:
-        <q-input class="col" type="number" rounded standout bottom-slots v-model.number="desde" label="Desde" dense>
+        <q-input class="col" type="number" rounded outlined bottom-slots v-model.number="desde" label="Desde" dense>
         <template v-slot:prepend>
           <q-icon name="las la-dollar-sign" />
         </template >
@@ -23,7 +13,7 @@
           Precio desde:
         </template>
       </q-input>
-      <q-input class="col" type="number" rounded standout bottom-slots v-model.number="hasta" label="Hasta" dense>
+      <q-input class="col" type="number" rounded outlined bottom-slots v-model.number="hasta" label="Hasta" dense>
         <template v-slot:prepend>
           <q-icon name="las la-dollar-sign" />
         </template >
@@ -80,7 +70,7 @@
     <div class=" col-6 q-pa-lg flex flex-center">
     <q-pagination
         v-model="current"
-        max="5"
+        max="8"
         direction-links
         outline
         color="orange"
@@ -94,11 +84,9 @@
   </div>
   </div>
 
-  <q-drawer
-      v-model="leftDrawerOpen"
+  <q-drawer v-model="leftDrawerOpen"
       show-if-above
-      bordered
-    >
+      bordered>
     <MenuFiltros></MenuFiltros>
     </q-drawer>
 

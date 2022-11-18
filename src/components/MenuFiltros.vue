@@ -1,5 +1,14 @@
 <template>
   <div class="q-pa-md ">
+    <div>
+      <q-toggle
+        v-model="value"
+        color="yellow"
+        label="Nuevo"
+        left-label
+      />
+    </div>
+    <div class="q-mt-sm q-ml-sm">
     <fieldset class="vtyu">
       <legend>MARCA</legend>
       <q-list bordered separator>
@@ -41,9 +50,10 @@
     </fieldset>
     <q-btn @click="filtrar" push color="white" text-color="blue-grey" label="Buscar" class="q-ma-md" icon="las la-search"/>
   </div>
+  </div>
 </template>
 
-<script>
+<script setup>
 import { ref, onMounted } from 'vue'
 import { useCounterStore } from 'stores/dataglobal'
 import { collection, getDocs } from 'firebase/firestore'
@@ -74,6 +84,7 @@ const cargarDatos = async function () {
   })
 }
 
+const value = ref(true)
 const store = useCounterStore()
 const marca = ref([])
 const sistemas = ref([])
@@ -97,23 +108,9 @@ const filtrar = () => {
   })
   store.filtroPantallas = valPantallas
 }
-export default {
-  setup () {
-    onMounted(() => {
-      cargarDatos()
-    })
-
-    return {
-      check1: ref(false),
-      store,
-      marca,
-      sistemas,
-      pantallas,
-      filtrar,
-      cargarDatos
-    }
-  }
-}
+onMounted(() => {
+  cargarDatos()
+})
 </script>
 
 <style lang="sass" scoped>
