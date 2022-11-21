@@ -37,7 +37,7 @@
         <q-space />
 
         <q-btn :to="'/Newad'" class=" q-ma-sm mobile-hide" round color="blue-grey-3" icon="las la-plus" />
-        <div><q-btn class=" q-ma-sm mobile-hide" flat round color="dark" icon="shopping_cart" size="20px"/></div>
+        <div><q-btn :to="'/VerAnuncio'" class=" q-ma-sm mobile-hide" flat round color="dark" icon="shopping_cart" size="20px"/></div>
       </q-toolbar>
     </q-header>
 
@@ -47,9 +47,7 @@
       bordered
       v-if="!mostrarDrawerYHeader"
     >
-
-    <div v-if="drawerInicio" ><MenuFiltros></MenuFiltros></div>
-    <div v-else><MenuMobile></MenuMobile></div>
+<MenuMobile></MenuMobile>
 
     </q-drawer>
 
@@ -61,14 +59,12 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import MenuFiltros from 'components/MenuFiltros.vue'
 import MenuMobile from 'components/MenuMobile.vue'
 
 export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    MenuFiltros,
     MenuMobile
   },
 
@@ -76,7 +72,6 @@ export default defineComponent({
     const leftDrawerOpen = ref(false)
 
     return {
-      MenuFiltros,
       MenuMobile,
       leftDrawerOpen,
       toggleLeftDrawer () {
