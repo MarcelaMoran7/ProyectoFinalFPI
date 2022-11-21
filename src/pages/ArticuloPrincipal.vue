@@ -111,6 +111,7 @@ const opcionesOrdenar = ref(
   ])
 
 const desde = ref(0)
+// const idArticulo = ref(null)
 const hasta = ref(0)
 const current = ref(3)
 const leftDrawerOpen = ref(false)

@@ -14,7 +14,7 @@
       <!-- Input Descripcion Solo para moviles -->
       <div class="col-12 order-xs-last q-mt-lg q-px-md lt-md">
         <span class="label text-bold">Descripción</span>
-        <q-input v-model="descripcionModel" ref="descripcionRef" type="textarea" :rules="[val => !!val || 'Campo requerido']" />
+        <q-input v-model="descripcionModel" ref="descripcionRef" filled type="textarea" :rules="[val => !!val || 'Campo requerido']" />
       </div>
 
       <!-- Inicio Parte superior derecha -->
@@ -27,19 +27,7 @@
 
             <!-- Precio se muestra solo en pantallas moviles -->
           <div class="row justify-center lt-md">
-            <fieldset>
-              <legend>PRECIO</legend>
-              <q-input ref="preciosRef" type="number" bottom-slots v-model="preciosModel" label="Ingrese el precio" label-color="yellow-9"  :dense="dense" :rules="[val => !!val || 'Campo requerido']" >
-                <template v-slot:prepend>
-                  <q-icon name="las la-dollar-sign" />
-                </template>
-                <template v-slot:append>
-                  <q-icon name="close" @click="text = ''" class="cursor-pointer" />
-                </template>
-              </q-input>
-              <q-btn label="PRUEBA" @click="reseteando"></q-btn>
-            </fieldset>
-            <!-- <precio-new ref="preciosRef" v-model="preciosModel" style="max-width: 300px" />  Referencia Al componente PrecioNew.vue ubicado En components -->
+            <PrecioNew ref="preciosRef" style="max-width: 300px" /> <!-- Referencia Al componente PrecioNew.vue ubicado En components -->
           </div>
           <!-- Input vendedor y telefono -->
           <div class="row">
@@ -53,7 +41,7 @@
           <!-- Input Descripcion Solo para Desktop -->
           <div class="q-mt-lg gt-sm " style="max-width: 410px">
             <span class="label text-bold">Descripción</span>
-            <q-input v-model="descripcionModel" ref="descripcionRef" type="textarea" :rules="[val => !!val || 'Campo requerido']" />
+            <q-input v-model="descripcionModel" ref="descripcionRef" filled type="textarea" :rules="[val => !!val || 'Campo requerido']" />
           </div>
         </div>
       </div> <!-- Fin Parte superior derecha -->
@@ -129,23 +117,7 @@
 
       <!-- Inicio Parte inferior derecha -->
       <div class="col-12 col-md-5 q-pa-md-xl order-xs-last">
-
-        <div class="gt-sm q-mx-lg">
-          <fieldset>
-              <legend>PRECIO</legend>
-              <q-input ref="preciosRef" type="number" bottom-slots v-model="preciosModel" label="Ingrese el precio" label-color="yellow-9"  :dense="dense" :rules="[val => !!val || 'Campo requerido']" >
-                <template v-slot:prepend>
-                  <q-icon name="las la-dollar-sign" />
-                </template>
-                <template v-slot:append>
-                  <q-icon name="close" @click="text = ''" class="cursor-pointer" />
-                </template>
-              </q-input>
-              <q-btn label="PRUEBA" @click="reseteando"></q-btn>
-          </fieldset>
-        </div>
-
-         <!-- <precio-new ref="preciosRef" v-model="preciosModel" class="gt-sm q-mx-lg" />  Referencia Al Archivo PrecioNew.vue ubicado En components -->
+        <precio-new ref="preciosRef" class="gt-sm q-mx-lg" />  <!-- Referencia Al Archivo PrecioNew.vue ubicado En components -->
         <!-- Botones Cancelar y Crear -->
         <div class=" q-pa-xs-lg q-gutter-md float-right q-ma-md">
           <q-btn @click="reseteame" class="q-py-md q-px-md " color="red" icon="las la-times-circle" label="Cancelar" />
@@ -160,7 +132,7 @@
 <script setup>
 import { ref } from 'vue'
 import DatosNuevos from 'src/components/DatosNuevos.vue'
-// import PrecioNew from 'src/components/PrecioNew.vue'
+import PrecioNew from 'src/components/PrecioNew.vue'
 // import NuevasImagenes from 'src/components/NuevasImagenes.vue'
 import { collection, addDoc } from '@firebase/firestore'
 import { db } from 'src/boot/database'
@@ -184,8 +156,6 @@ const $q = useQuasar()
 // REFERENCIAS COMPONENTES EXTERNOS
 const preciosRef = ref(null)
 const DatosRefReseteando = ref(null)
-// MODEL COMPONENTES EXTERNOS
-const preciosModel = ref('')
 // const ImagesRef = ref(null)
 
 // MODEL
@@ -201,7 +171,7 @@ function reseteame () {
   telefonoRef.value.resetValidation()
   descripcionRef.value.resetValidation()
 
-  preciosRef.value.resetValidation()
+  preciosRef.value.reseteando()
   DatosRefReseteando.value.resetDatosNuevos()
 }
 
@@ -210,8 +180,7 @@ function valids () {
     tituloRef.value.validate(),
     vendedorRef.value.validate(),
     telefonoRef.value.validate(),
-    descripcionRef.value.validate(),
-    preciosRef.value.validate()
+    descripcionRef.value.validate()
   ]
   return titul
 }
@@ -225,14 +194,14 @@ function triggerNotificando (tipo, mensaje) {
 
 const saveWork = async function () {
   const validDatosNue = DatosRefReseteando.value.validDatosNuev()
-  // const validprecio = preciosRef.value.validPrecio()
+  const validprecio = preciosRef.value.validPrecio()
   valids()
   // this.prueba()
   DatosRefReseteando.value.validDatosNuev()
-  // preciosRef.value.validPrecio()
+  preciosRef.value.validPrecio()
   console.log(valids()[0])
   console.log('este es el de vendedor ' + valids()[1])
-  if (valids()[0] && valids()[1] && valids()[2] && valids()[3] && valids()[4] && validDatosNue[0] && validDatosNue[1] && validDatosNue[2] && validDatosNue[3] && validDatosNue[4]) {
+  if (valids()[0] && valids()[1] && valids()[2] && valids()[3] && validDatosNue[0] && validDatosNue[1] && validDatosNue[2] && validDatosNue[3] && validDatosNue[4] && validprecio) {
     guardarArticulo()
     console.log('entre jasta aqui')
   } else {
@@ -252,7 +221,7 @@ const guardarArticulo = async function () {
       vendedor: vendedorModel.value,
       telefono: telefonoModel.value,
       descripcion: descripcionModel.value,
-      precio: preciosModel.value,
+      precio: preciosRef.value.obteniendoDatos(),
       marca: datos[0],
       modelo: datos[1],
       pantalla: datos[2],

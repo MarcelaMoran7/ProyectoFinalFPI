@@ -6,7 +6,7 @@
       <q-item dense v-for="(marcas, key) in marca" :key="'marc-' + key" clickable v-ripple>
         <q-item-section>
           <q-checkbox keep-color v-model="marcas.val" color="blue-grey">
-            {{marcas.label}}<q-badge class="q-ml-xs" color="blue-grey" align="top">{{marcas.cantidad}}</q-badge>
+            {{marcas.label}}<q-badge class="q-ml-xs" color="blue-grey" aling="top">{{marcas.cantidad}}</q-badge>
         </q-checkbox>
 
         </q-item-section>
@@ -19,7 +19,7 @@
       <q-item dense v-for="(sistemas, key) in sistemas" :key="'sis-' + key" clickable v-ripple>
         <q-item-section>
           <q-checkbox keep-color v-model="sistemas.val" color="blue-grey">
-            {{sistemas.label}}<q-badge class="q-ml-xs" color="blue-grey" align="top">{{sistemas.cantidad}}</q-badge>
+            {{sistemas.label}}<q-badge class="q-ml-xs" color="blue-grey" aling="top">{{sistemas.cantidad}}</q-badge>
         </q-checkbox>
 
         </q-item-section>
@@ -53,7 +53,7 @@ const cargarDatos = async function () {
   // cargando los datos
   const querySnapshot = await getDocs(collection(db, 'marca'))
   querySnapshot.forEach((doc) => {
-    console.log(doc.data())
+    console.log('Esto es en marca ' + doc.data())
     marca.value.push({ val: false, label: doc.data().nombre, cantidad: doc.data().cantidad })
   })
 

@@ -12,7 +12,7 @@
   <q-item class="text-center">
     <q-item-section><q-btn to="/" stretch flat label="Inicio" /></q-item-section>
   </q-item>
-  <q-separator color="yellow" inset />
+  <q-separator color="orange" inset />
 
   <q-item class="text-center">
     <q-item-section><q-btn to="/Newad" stretch flat label="Nuevo Anuncio" /></q-item-section>
