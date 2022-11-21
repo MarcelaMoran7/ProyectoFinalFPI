@@ -105,7 +105,6 @@ const opcionesOrdenar = ref(
   [{ label: 'Precio', value: 'Precio' },
     { label: 'Fecha', value: 'Fecha' }
   ])
-
 const model = ref(null)
 const options = ['2', '4', '5', '6', '8']
 
@@ -222,22 +221,22 @@ const filtrarPorMenuPant = () => {
   }
 }
 
-// const filtrarEstado = () => {
-/* if (estado.value === true) {
-  articulos.value = articulos.value.filter((item) => {
-    if (item.estado === 'nuevo') {
-      return true
-    } else { return false }
-  })
-} */
-// }
-// watchEffect(() => {
-/* if (estado.value === true) {
-  filtrarEstado()
-} else {
-  articulos.value = articulosOriginal.value.map((x) => x)
-} */
-// })
+/* const filtrarEstado = () => {
+  if (estado.value === true) {
+    articulos.value = articulos.value.filter((item) => {
+      if (item.estado === 'nuevo') {
+        return true
+      } else { return false }
+    })
+  }
+}
+watchEffect(() => {
+  if (estado.value === true) {
+    filtrarEstado()
+  } else {
+    articulos.value = articulosOriginal.value.map((x) => x)
+  }
+}) */
 
 const cargar = async () => {
   hayFiltroPrecio.value = false

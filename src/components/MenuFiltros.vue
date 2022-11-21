@@ -1,6 +1,7 @@
 <template>
   <div class="q-pa-md ">
-    <div>
+    <div class="q-mt-sm q-ml-sm">
+      <div>
       <q-toggle
         v-model="value"
         color="yellow"
@@ -8,7 +9,6 @@
         left-label
       />
     </div>
-    <div class="q-mt-sm q-ml-sm">
     <fieldset class="vtyu">
       <legend>MARCA</legend>
       <q-list bordered separator>
