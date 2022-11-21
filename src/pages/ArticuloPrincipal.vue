@@ -56,11 +56,11 @@
       <div class="row q-ma-md ">
       <q-card  class="my-card vtyu col-md-3 col-6 q-pa-sm q-mt-sm shadow-4"
       v-for="(item,key) in articulos" :key="key">
-      <img src="https://cdn.quasar.dev/img/mountains.jpg">
+      <img :src="item.urlImagen">
 
       <q-card-section>
         <div class="text-h6 text-center">${{item.precio}}</div>
-        {{item.titulo}}
+        <div class="text-center">{{item.titulo}}</div>
       </q-card-section>
       <q-separator />
       <q-card-actions aling="right">
@@ -106,14 +106,16 @@ import { useCounterStore } from 'stores/dataglobal'
 import MenuFiltros from 'src/components/MenuFiltros.vue'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from 'boot/database'
+import { getStorage, ref as refStorage, listAll, getDownloadURL } from 'firebase/storage'
 
 const store = useCounterStore()
+const storage = getStorage()
 const ordenarPor = ref('Precio')
 const opcionesOrdenar = ref(
   [{ label: 'Precio', value: 'Precio' },
     { label: 'Fecha', value: 'Fecha' }
   ])
-const estado = ref(true)
+const estado = ref(false)
 const model = ref(null)
 const options = ['2', '4', '5', '6', '8']
 
@@ -135,6 +137,7 @@ const articulosOriginal = ref([
 
 const articulos = ref([])
 const hayFiltroPrecio = ref(false)
+const contadorCargarFotos = ref(0)
 
 const hayFiltro = computed(() => {
   if (desde.value > 0 && hasta.value > 0) { return true } else { return false }
@@ -255,18 +258,60 @@ const cargar = async () => {
   articulosOriginal.value = []
   const querySnapshot = await getDocs(collection(db, 'anuncio'))
   querySnapshot.forEach((doc) => {
-    articulosOriginal.value.push(doc.data())
-    console.log(doc.data())
+    const picture = doc.data()
+    picture.id = doc.id
+    articulosOriginal.value.push(picture)
+    // console.log(doc.data())
     // console.log(`${doc.id} => ${doc.data()}`)
   })
-  articulos.value = articulosOriginal.value.map((a) => {
-    return { ...a }
+  cargarImagenes()
+}
+
+const cargarImagenes = () => {
+  articulosOriginal.value.forEach((arti) => {
+    const listRef = refStorage(storage, arti.id)
+    listAll(listRef)
+      .then((res) => {
+        if (res.items.length > 0) {
+          // All the items under listRef.
+          // Obteniendo url
+
+          getDownloadURL(refStorage(storage, res.items[0].fullPath))
+            .then((url) => {
+              // `url` is the download URL for 'images/stars.jpg'
+              contadorCargarFotos.value++
+              arti.urlImagen = url
+              CompletasImagenes()
+            })
+            .catch((error) => {
+              // Handle any errors
+              console.log(error)
+            })
+
+          // obteniendo url
+        } else {
+          contadorCargarFotos.value++
+          CompletasImagenes()
+        }
+
+      // por cada archivo
+      }).catch((error) => {
+        // Uh-oh, an error occurred!
+        console.log(error)
+      })
   })
+}
+
+function CompletasImagenes () {
+  if (contadorCargarFotos.value === articulosOriginal.value.length) {
+    articulos.value = articulosOriginal.value.map((a) => {
+      return { ...a }
+    })
+  }
 }
 
 onMounted(() => {
   cargar()
-
   console.log(hayFiltro.value)
 })
 
