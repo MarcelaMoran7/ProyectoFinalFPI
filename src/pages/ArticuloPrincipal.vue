@@ -1,7 +1,7 @@
 <template ref="articulosPrincipales">
   <div>
     <div class="row justify-center bg-yellow-2">
-      <div class="col-1 q-ma-md">
+      <div class="col-2 col-md-1 q-mt-md">
       <q-toggle
         v-model="estado"
         color="yellow"
@@ -35,7 +35,7 @@
 
       <div><q-btn  @click="toggleLeftDrawer" round color="black" icon="las la-filter" class="col-2 desktop-hide q-mt-md q-pa-md " size="sm"/></div>
 
-      <q-select @update:model-value="cambioSelect" class="col-6 desktop-hide q-ma-md" rounded outlined v-model="ordenarPor" :options="opcionesOrdenar" label="Ordenar por" />
+      <q-select @update:model-value="cambioSelect" class="col-5 desktop-hide q-ma-md" rounded outlined v-model="ordenarPor" :options="opcionesOrdenar" label="Ordenar por" />
 
       <div class="col-4 col-md-4 mobile-hide q-ma-lg ">
         Ordenar por:
@@ -75,7 +75,7 @@
   </div>
 
   <div class="row">
-    <div class=" col-6 q-pa-lg flex flex-center">
+    <div class=" col-12 col-md-6 q-pa-lg flex flex-center">
     <q-pagination
         v-model="current"
         max="8"
@@ -87,7 +87,7 @@
         active-text-color="orange"
       />
   </div>
-  <div class="col-1 q-ma-lg">
+  <div class="col-1 q-ma-lg mobile-hide">
     Articulos por pagina:<q-select filled v-model="model" :options="options" />
   </div>
   </div>
