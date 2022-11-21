@@ -1,6 +1,14 @@
 <template ref="articulosPrincipales">
   <div>
     <div class="row justify-center bg-yellow-2">
+      <div class="col-1 q-ma-md">
+      <q-toggle
+        v-model="estado"
+        color="yellow"
+        label="Nuevo"
+        left-label
+      />
+    </div>
 
       <div class="col-6 row col-md-6 mobile-hide q-mt-lg q-ml-sm">
         <div><q-btn @click="cargar" v-show="hayFiltroPrecio" rounded flat color="red" icon-right="las la-undo-alt" label="Limpiar filtro" class="q-pa-xs q-ma-xs" size="12px"/></div>
@@ -93,7 +101,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, watch } from 'vue'
+import { onMounted, ref, computed, watch, watchEffect } from 'vue'
 import { useCounterStore } from 'stores/dataglobal'
 import MenuFiltros from 'src/components/MenuFiltros.vue'
 import { collection, getDocs } from 'firebase/firestore'
@@ -105,6 +113,7 @@ const opcionesOrdenar = ref(
   [{ label: 'Precio', value: 'Precio' },
     { label: 'Fecha', value: 'Fecha' }
   ])
+const estado = ref(true)
 const model = ref(null)
 const options = ['2', '4', '5', '6', '8']
 
@@ -114,14 +123,14 @@ const hasta = ref(0)
 const current = ref(3)
 const leftDrawerOpen = ref(false)
 const articulosOriginal = ref([
-  { id: 'jsdfbhkslduh', sistema: 'Android', precio: 133, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 12 - 25', marca: 'Iphone', pantalla: '6.0', vendedor: 'Juan Perez', estado: 'nuevo' },
-  { id: 'jsdfbhksldih', sistema: 'IOS', precio: 122, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2021 - 11 - 24', marca: 'Samsung', pantalla: '5.5', vendedor: 'Juan Perez', estado: 'usado' },
-  { id: 'jsdfbhksldoh', sistema: 'Windows', precio: 140, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2019 - 12 - 25', marca: 'Nokia', pantalla: '5.0', vendedor: 'Juan Perez', estado: 'nuevo' },
-  { id: 'jsdfbhksldah', sistema: 'Android', precio: 132, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 25', marca: 'Huawei', pantalla: '6.0', vendedor: 'Juan Perez', estado: 'usado' },
-  { id: 'jsdfbhksldeh', sistema: 'IOS', precio: 127, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 9 - 25', marca: 'Xiaomi', pantalla: '5.5', vendedor: 'Juan Perez', estado: 'nuevo' },
-  { id: 'jsdfbhksldjh', sistema: 'Windows', precio: 135, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 8 - 25', marca: 'Iphone', pantalla: '5.0', vendedor: 'Juan Perez', estado: 'usado' },
-  { id: 'jsdfbhksldph', sistema: 'Android', precio: 138, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 11 - 15', marca: 'Samsung', pantalla: '6.0', vendedor: 'Juan Perez', estado: 'nuevo' },
-  { id: 'jsdfbhksldqh', sistema: 'IOS', precio: 25.01, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 5', marca: 'Huawei', pantalla: '5.5', vendedor: 'Juan Perez', estado: 'usado' }
+  { id: 'jsdfbhkslduh', sistema: 'Android', precio: 133, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 12 - 25', marca: 'Iphone', pantalla: '6.0', vendedor: 'Juan Perez' },
+  { id: 'jsdfbhksldih', sistema: 'IOS', precio: 122, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2021 - 11 - 24', marca: 'Samsung', pantalla: '5.5', vendedor: 'Juan Perez' },
+  { id: 'jsdfbhksldoh', sistema: 'Windows', precio: 140, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2019 - 12 - 25', marca: 'Nokia', pantalla: '5.0', vendedor: 'Juan Perez' },
+  { id: 'jsdfbhksldah', sistema: 'Android', precio: 132, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 25', marca: 'Huawei', pantalla: '6.0', vendedor: 'Juan Perez' },
+  { id: 'jsdfbhksldeh', sistema: 'IOS', precio: 127, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 9 - 25', marca: 'Xiaomi', pantalla: '5.5', vendedor: 'Juan Perez' },
+  { id: 'jsdfbhksldjh', sistema: 'Windows', precio: 135, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 8 - 25', marca: 'Iphone', pantalla: '5.0', vendedor: 'Juan Perez' },
+  { id: 'jsdfbhksldph', sistema: 'Android', precio: 138, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 11 - 15', marca: 'Samsung', pantalla: '6.0', vendedor: 'Juan Perez' },
+  { id: 'jsdfbhksldqh', sistema: 'IOS', precio: 25.01, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 5', marca: 'Huawei', pantalla: '5.5', vendedor: 'Juan Perez' }
 ])
 
 const articulos = ref([])
@@ -220,11 +229,10 @@ const filtrarPorMenuPant = () => {
     })
   }
 }
-
-/* const filtrarEstado = () => {
+const filtrarEstado = () => {
   if (estado.value === true) {
     articulos.value = articulos.value.filter((item) => {
-      if (item.estado === 'nuevo') {
+      if (item.estado === 'Nuevo') {
         return true
       } else { return false }
     })
@@ -236,7 +244,7 @@ watchEffect(() => {
   } else {
     articulos.value = articulosOriginal.value.map((x) => x)
   }
-}) */
+})
 
 const cargar = async () => {
   hayFiltroPrecio.value = false

@@ -1,14 +1,6 @@
 <template>
   <div class="q-pa-md ">
     <div class="q-mt-sm q-ml-sm">
-      <div>
-      <q-toggle
-        v-model="value"
-        color="yellow"
-        label="Nuevo"
-        left-label
-      />
-    </div>
     <fieldset class="vtyu">
       <legend>MARCA</legend>
       <q-list bordered separator>
@@ -84,7 +76,6 @@ const cargarDatos = async function () {
   })
 }
 
-const value = ref(true)
 const store = useCounterStore()
 const marca = ref([])
 const sistemas = ref([])
