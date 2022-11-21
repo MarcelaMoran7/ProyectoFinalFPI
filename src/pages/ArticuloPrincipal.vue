@@ -96,6 +96,8 @@
 import { onMounted, ref, computed, watch } from 'vue'
 import { useCounterStore } from 'stores/dataglobal'
 import MenuFiltros from 'src/components/MenuFiltros.vue'
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from 'boot/database'
 
 const store = useCounterStore()
 const ordenarPor = ref('Precio')
@@ -112,16 +114,16 @@ const desde = ref(0)
 const hasta = ref(0)
 const current = ref(3)
 const leftDrawerOpen = ref(false)
-const articulosOriginal = [
-  { id: 'jsdfbhkslduh', sistema: 'Android', precio: 133, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 12 - 25', marca: 'Iphone', pantalla: '6.0' },
-  { id: 'jsdfbhksldih', sistema: 'IOS', precio: 122, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2021 - 11 - 24', marca: 'Samsung', pantalla: '5.5' },
-  { id: 'jsdfbhksldoh', sistema: 'Windows', precio: 140, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2019 - 12 - 25', marca: 'Nokia', pantalla: '5.0' },
-  { id: 'jsdfbhksldah', sistema: 'Android', precio: 132, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 25', marca: 'Huawei', pantalla: '6.0' },
-  { id: 'jsdfbhksldeh', sistema: 'IOS', precio: 127, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 9 - 25', marca: 'Xiaomi', pantalla: '5.5' },
-  { id: 'jsdfbhksldjh', sistema: 'Windows', precio: 135, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 8 - 25', marca: 'Iphone', pantalla: '5.0' },
-  { id: 'jsdfbhksldph', sistema: 'Android', precio: 138, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 11 - 15', marca: 'Samsung', pantalla: '6.0' },
-  { id: 'jsdfbhksldqh', sistema: 'IOS', precio: 25.01, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 5', marca: 'Huawei', pantalla: '5.5' }
-]
+const articulosOriginal = ref([
+  { id: 'jsdfbhkslduh', sistema: 'Android', precio: 133, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 12 - 25', marca: 'Iphone', pantalla: '6.0', vendedor: 'Juan Perez' },
+  { id: 'jsdfbhksldih', sistema: 'IOS', precio: 122, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2021 - 11 - 24', marca: 'Samsung', pantalla: '5.5', vendedor: 'Juan Perez' },
+  { id: 'jsdfbhksldoh', sistema: 'Windows', precio: 140, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2019 - 12 - 25', marca: 'Nokia', pantalla: '5.0', vendedor: 'Juan Perez' },
+  { id: 'jsdfbhksldah', sistema: 'Android', precio: 132, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 25', marca: 'Huawei', pantalla: '6.0', vendedor: 'Juan Perez' },
+  { id: 'jsdfbhksldeh', sistema: 'IOS', precio: 127, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 9 - 25', marca: 'Xiaomi', pantalla: '5.5', vendedor: 'Juan Perez' },
+  { id: 'jsdfbhksldjh', sistema: 'Windows', precio: 135, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 8 - 25', marca: 'Iphone', pantalla: '5.0', vendedor: 'Juan Perez' },
+  { id: 'jsdfbhksldph', sistema: 'Android', precio: 138, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 11 - 15', marca: 'Samsung', pantalla: '6.0', vendedor: 'Juan Perez' },
+  { id: 'jsdfbhksldqh', sistema: 'IOS', precio: 25.01, titulo: 'Samsung J6, Pantalla de 5.5 64GB, 2GB Ram, Color Negro', fecha: '2022 - 10 - 5', marca: 'Huawei', pantalla: '5.5', vendedor: 'Juan Perez' }
+])
 
 const articulos = ref([])
 const hayFiltroPrecio = ref(false)
@@ -214,13 +216,20 @@ const filtrarPorMenuPant = () => {
   }
 }
 
-const cargar = () => {
+const cargar = async () => {
   hayFiltroPrecio.value = false
   store.filtroMarcas = []
   store.filtroSistemas = []
   store.filtroPantallas = []
   articulos.value = []
-  articulos.value = articulosOriginal.map((a) => {
+  articulosOriginal.value = []
+  const querySnapshot = await getDocs(collection(db, 'anuncio'))
+  querySnapshot.forEach((doc) => {
+    articulosOriginal.value.push(doc.data())
+    console.log(doc.data())
+    // console.log(`${doc.id} => ${doc.data()}`)
+  })
+  articulos.value = articulosOriginal.value.map((a) => {
     return { ...a }
   })
 }
