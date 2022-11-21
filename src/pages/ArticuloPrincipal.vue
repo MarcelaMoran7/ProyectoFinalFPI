@@ -125,15 +125,19 @@ const articulosOriginal = [
 
 const articulos = ref([])
 const hayFiltroPrecio = ref(false)
+
 const hayFiltro = computed(() => {
   if (desde.value > 0 && hasta.value > 0) { return true } else { return false }
 })
+
 const hayFiltroMenu = computed(() => {
   return store.filtroMarcas.length
 })
+
 const hayFiltroMenuSis = computed(() => {
   return store.filtroSistemas.length
 })
+
 const hayFiltroMenuPant = computed(() => {
   return store.filtroPantallas.length
 })
@@ -142,6 +146,7 @@ watch(hayFiltroMenuPant, (nuevo, viejo) => {
   console.log('observador')
   filtrarPorMenuPant()
 })
+
 watch(hayFiltroMenuSis, (nuevo, viejo) => {
   console.log('observador')
   filtrarPorMenuSis()
@@ -155,6 +160,7 @@ watch(hayFiltroMenu, (nuevo, viejo) => {
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
+
 const Ordenar = () => {
   if (ordenarPor.value === 'Precio') {
     articulos.value.sort((a, b) => a.precio - b.precio)
@@ -232,6 +238,7 @@ onMounted(() => {
 })
 
 </script>
+
 <style lang="sass" scoped>
 .my-custom-toggle
   border: 1px solid yellow-14

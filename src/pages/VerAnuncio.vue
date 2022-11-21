@@ -14,10 +14,16 @@
       @mouseenter="autoplay = false"
       @mouseleave="autoplay = true"
     >
-      <q-carousel-slide :name="1" img-src="https://cdn.quasar.dev/img/mountains.jpg" />
-      <q-carousel-slide :name="2" img-src="https://cdn.quasar.dev/img/parallax1.jpg" />
+      <q-carousel-slide
+        v-for="(imagen, key) in UrlImagenes" :key="'img-' + key"
+        :name="key"
+        :img-src="imagen"
+      />
+      <!--<q-carousel-slide :name="2" img-src="https://cdn.quasar.dev/img/parallax1.jpg" />
       <q-carousel-slide :name="3" img-src="https://cdn.quasar.dev/img/parallax2.jpg" />
       <q-carousel-slide :name="4" img-src="https://cdn.quasar.dev/img/quasar.jpg" />
+      <q-carousel-slide :name="5" img-src="https://firebasestorage.googleapis.com/v0/b/proyectocelulares1.appspot.com/o/sJIyZSfji6tuJDG5jgLi%2F01%20Instalando%20Todo%20Para%20Quasar.PNG?alt=media&token=95cebfbb-3ee1-464e-823a-d67378532695" />
+        -->
     </q-carousel>
       </div>
       <div class="col-12 col-md-6 q-pa-md-xl q-pa-sm q-py-lg">
@@ -35,8 +41,9 @@
             <q-page-sticky class="lt-md" position="bottom" :offset="[0, 5]" >
             <q-btn to="/" color="primary" glossy class="rotate-0 q-pa-md q-px-lg" label="Inicio" />
             <q-btn color="secondary" glossy class="rotate-0 q-pa-md q-px-lg" label="Comprar" />
-            <q-btn label="Probando" @click="listarDatos" />
+            <!--<q-btn label="Probando" @click="listarDatos" />-->
             <q-btn label="ProbandDOc" @click="listarDocumento" />
+            <!--<q-btn label="cargarIMG" @click="cargarImagenes"  />-->
           </q-page-sticky>
           </div>
           <fieldset>
@@ -83,8 +90,13 @@
 
 import { ref } from 'vue'
 // import { useCounterStore } from 'stores/dataglobal'
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc } from 'firebase/firestore'
 import { db } from 'src/boot/database'
+
+import { getStorage, ref as refStorage, listAll, getDownloadURL } from 'firebase/storage'
+
+const storage = getStorage()
+const UrlImagenes = ref([])
 
 const slide = ref(1)
 const autoplay = ref(true)
@@ -103,11 +115,11 @@ const rom = ref(null)
 const ram = ref(null)
 const descripcion = ref(null)
 
-const datos = ref([])
-
+// const datos = ref([])
+const idArticle = ref('sJIyZSfji6tuJDG5jgLi')
 // METODOS
 
-const listarDatos = async function () {
+/** const listarDatos = async function () {
   // cargando los sistemas
   const querySnapshot1 = await getDocs(collection(db, 'anuncio'))
   querySnapshot1.forEach((doc) => {
@@ -116,16 +128,18 @@ const listarDatos = async function () {
     datos.value.push({ precio: doc.data().precio, descripcion: doc.data().descripcion, estado: doc.data().estado })
   })
   console.log(datos)
-}
+} */
+
 // oq6BGo61XEKHQPzA9Y4Y   sJIyZSfji6tuJDG5jgLi
 const listarDocumento = async function () {
-  const docRef = doc(db, 'anuncio', 'oq6BGo61XEKHQPzA9Y4Y')
+  const docRef = doc(db, 'anuncio', idArticle.value)
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
     console.log('Document data: ', docSnap.data())
     console.log('Document data: ', docSnap.data().telefono)
 
+    cargarImagenes()
     titulo.value = docSnap.data().titulo
     precio.value = '$' + docSnap.data().precio
     telefono.value = docSnap.data().telefono
@@ -142,6 +156,44 @@ const listarDocumento = async function () {
     // doc.data() will be undefined in this case
     console.log('No such document!')
   }
+}
+
+function cargarImagenes () {
+  console.log('Cargar Imagenes')
+  // Create a reference under which you want to list
+  const listRef = refStorage(storage, idArticle.value)
+
+  // Find all the prefixes and items.
+  listAll(listRef)
+    .then((res) => {
+      res.prefixes.forEach((folderRef) => {
+        // All the prefixes under listRef.
+        // You may call listAll() recursively on them.
+      })
+      res.items.forEach((itemRef) => {
+        // All the items under listRef.
+        console.log(itemRef)
+        // console.log(itemRef.fullPath)
+
+        // OBTENIENDO URL
+
+        getDownloadURL(refStorage(storage, itemRef.fullPath))
+          .then((url) => {
+            // `url` is the download URL for 'images/stars.jpg'
+            console.log('estas son las url ' + url)
+            UrlImagenes.value.push(url)
+          })
+          .catch((error) => {
+            // Handle any errors
+            console.log(error)
+          })
+
+        // OBTENIENDO URL
+      })
+    }).catch((error) => {
+      console.log(error)
+      // Uh-oh, an error occurred!
+    })
 }
 
 </script>
