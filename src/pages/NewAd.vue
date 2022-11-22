@@ -7,9 +7,11 @@
     <div class="row">
 
       <!-- Inicio Form parte superior izquierda -->
-      <div class="col-12 col-md-6 order-xs-last order-md-first">
+      <transition appear enter-active-class="animated rotateInDownLeft slow" leave-active-class="animated rotateInUpLeft slow">
+        <div class="col-12 col-md-6 order-xs-last order-md-first">
         <DatosNuevos ref="DatosRefReseteando" /> <!-- Referencia al componente DatosNuevos.vue ubicado en components -->
       </div> <!-- Fin Form parte superior izquierda -->
+      </transition>
 
       <!-- Input Descripcion Solo para moviles -->
       <div class="col-12 order-xs-last q-mt-lg q-px-md lt-md">
@@ -17,7 +19,8 @@
         <q-input v-model="descripcionModel" ref="descripcionRef" filled type="textarea" :rules="[val => !!val || 'Campo requerido']" />
       </div>
 
-      <!-- Inicio Parte superior derecha -->
+      <transition appear enter-active-class="animated rotateInDownRight slow" leave-active-class="animated rotateInUpRight slow">
+        <!-- Inicio Parte superior derecha -->
       <div class="col-12 col-md-6 ">
         <!-- Inferior todos los input -->
         <div class="q-pa-md q-mx-md-xl ">
@@ -54,8 +57,10 @@
           </div>
         </div>
       </div> <!-- Fin Parte superior derecha -->
+      </transition>
 
-      <!--Inicio, Agregar imagenes del nuevo producto "parte inferior izquierda" -->
+      <transition appear enter-active-class="animated zoomInDown slow" leave-active-class="animated zoomOutDown slow">
+         <!--Inicio, Agregar imagenes del nuevo producto "parte inferior izquierda" -->
       <div class="col-12 col-md-7 order-xs-first order-md-last">
         <fieldset class="q-pa-md q-mx-md-xl q-mt-md-md shadow-3">
           <legend>IMAGENES</legend>
@@ -111,6 +116,7 @@
           </div> <!-- Fin Fila uno -->
         </fieldset>
       </div> <!-- Fin Agregar imagenes "Parte Inferior Izquierda" -->
+      </transition>
 
       <!-- Inicio Parte inferior derecha -->
       <div class="col-12 col-md-5 q-pa-md-xl order-xs-last">

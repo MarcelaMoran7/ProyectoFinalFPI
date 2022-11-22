@@ -25,7 +25,8 @@
 
       </transition>
 
-      <div class="col-12 col-md-6 q-pa-md-xl q-pa-sm q-py-lg">
+      <transition appear enter-active-class="animated rollIn slow" leave-active-class="animated rollOut slow">
+        <div class="col-12 col-md-6 q-pa-md-xl q-pa-sm q-py-lg">
         <span class="label text-white text-bold text-h6"> {{titulo}} </span>
           <div class="q-pt-md">
             <span class="label text-white text-h4 text-bold gt-sm"> {{precio}} </span>
@@ -57,6 +58,9 @@
           </div>
           </fieldset>
       </div>
+
+      </transition>
+
       <div class="col-12 q-pa-lg text-center gt-sm">
         <span class="label text-h4 text-white">DESCRIPCIÓN</span>
       </div>
