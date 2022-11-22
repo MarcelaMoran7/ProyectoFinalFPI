@@ -8,13 +8,13 @@
 
       <!-- Inicio Form parte superior izquierda -->
       <div class="col-12 col-md-6 order-xs-last order-md-first">
-          <DatosNuevos ref="DatosRefReseteando" /> <!-- Referencia al componente DatosNuevos.vue ubicado en components -->
+        <DatosNuevos ref="DatosRefReseteando" /> <!-- Referencia al componente DatosNuevos.vue ubicado en components -->
       </div> <!-- Fin Form parte superior izquierda -->
 
       <!-- Input Descripcion Solo para moviles -->
       <div class="col-12 order-xs-last q-mt-lg q-px-md lt-md">
         <span class="label text-bold">Descripción</span>
-        <q-input v-model="descripcionModel" ref="descripcionRef" type="textarea" :rules="[val => !!val || 'Campo requerido']" />
+        <q-input v-model="descripcionModel" ref="descripcionRef" filled type="textarea" :rules="[val => !!val || 'Campo requerido']" />
       </div>
 
       <!-- Inicio Parte superior derecha -->
@@ -29,18 +29,14 @@
           <div class="row justify-center lt-md">
             <fieldset>
               <legend>PRECIO</legend>
-              <q-input ref="preciosRef" type="number" bottom-slots v-model="preciosModel" label="Ingrese el precio" label-color="yellow-9"  :dense="dense" :rules="[val => !!val || 'Campo requerido']" >
+              <q-input ref="preciosRef" filled type="number" bottom-slots v-model="preciosModel" label="Ingrese el precio" label-color="yellow-9"  :dense="dense" :rules="[val => !!val || 'Campo requerido']" >
                 <template v-slot:prepend>
                   <q-icon name="las la-dollar-sign" />
                 </template>
-                <template v-slot:append>
-                  <q-icon name="close" @click="text = ''" class="cursor-pointer" />
-                </template>
               </q-input>
-              <q-btn label="PRUEBA" @click="reseteando"></q-btn>
             </fieldset>
-            <!-- <precio-new ref="preciosRef" v-model="preciosModel" style="max-width: 300px" />  Referencia Al componente PrecioNew.vue ubicado En components -->
           </div>
+
           <!-- Input vendedor y telefono -->
           <div class="row">
             <div class="col-6 col-md-8">
@@ -50,98 +46,83 @@
               <q-input v-model="telefonoModel" ref="telefonoRef" class="q-my-sm" label-color="yellow-9" filled label="Telefono" mask="#### - ####" unmasked-value placeholder="#### - ####" :rules="[val => !!val || 'Campo requerido']" />
             </div>
           </div>
+
           <!-- Input Descripcion Solo para Desktop -->
           <div class="q-mt-lg gt-sm " style="max-width: 410px">
             <span class="label text-bold">Descripción</span>
-            <q-input v-model="descripcionModel" ref="descripcionRef" type="textarea" :rules="[val => !!val || 'Campo requerido']" />
+            <q-input v-model="descripcionModel" ref="descripcionRef" filled type="textarea" :rules="[val => !!val || 'Campo requerido']" />
           </div>
         </div>
       </div> <!-- Fin Parte superior derecha -->
 
       <!--Inicio, Agregar imagenes del nuevo producto "parte inferior izquierda" -->
       <div class="col-12 col-md-7 order-xs-first order-md-last">
-
         <fieldset class="q-pa-md q-mx-md-xl q-mt-md-md shadow-3">
-    <legend>IMAGENES</legend>
+          <legend>IMAGENES</legend>
+          <!-- Inicio Fila uno -->
+          <div class="row ">
 
-    <!-- Inicio Fila uno -->
-    <div class="row ">
+            <!-- Botones Agregar/ quitar solo se muestra en Desktop -->
+            <div class="col-2 gt-sm">
+              <!-- Agregar archivos el q-file se usa porque solo el boton no funciono -->
+              <q-file
+                class="hidden"
+                v-model="fotosModel"
+                multiple
+                filled accept=".jpg, image/*"
+                ref="files"
+                @update:model-value="obtenerURL">
+              </q-file>
+              <div><q-btn @click="addFoto" class="q-pa-md q-ma-sm" round color="secondary" icon="las la-plus" /></div>
+              <q-btn @click="quitarFotos" class="q-pa-md q-ma-sm" round color="red" icon="las la-minus" />
+            </div>
 
-      <!-- Botones Agregar/ quitar solo se muestra en Desktop -->
-      <div class="col-2 gt-sm">
-         <!-- Agregar archivos el q-file se usa porque solo el boton no funciono -->
-         <q-file
-            class="hidden"
-            v-model="fotosModel"
-            multiple
-            filled accept=".jpg, image/*"
-            ref="files"
-            @update:model-value="obtenerURL">
-          </q-file>
-        <div><q-btn @click="addFoto" class="q-pa-md q-ma-sm" round color="secondary" icon="las la-plus" /></div>
-        <q-btn @click="quitarFotos" class="q-pa-md q-ma-sm" round color="red" icon="las la-minus" />
-        <!--<q-btn @click="subirFotos" label="Guardar foto" />-->
-      </div>
+            <!-- Tabla de datos solo se muesta en pantallas md hacia arriba -->
+            <div class="col-5 gt-xs ">
+              <q-table class="my-sticky-header-table" title="Detalles Add" no-data-label="No hay datos para mostrar" :rows="rows" :columns="columns" row-key="name" flat bordered />
+            </div>
 
-      <!-- Tabla de datos solo se muesta en pantallas md hacia arriba -->
-      <div class="col-5 gt-xs ">
-        <q-table class="my-sticky-header-table" title="Detalles Add" no-data-label="No hay datos para mostrar" :rows="rows" :columns="columns" row-key="name" flat bordered />
-      </div>
+            <!-- Carousel de agregar nuevas fotografias -->
+            <div class=" col-xs-12 col-sm-7 col-md-5 relative-position q-pl-xs">
+              <q-carousel swipeable animated v-model="slide" thumbnails infinite>
+                <q-carousel-slide
+                  v-for="(img,id) in fotosURL" :key="id" :name="id+1" :img-src="img">
+                </q-carousel-slide>
+              </q-carousel>
 
-      <!-- Carousel de agregar nuevas fotografias -->
-      <div class=" col-xs-12 col-sm-7 col-md-5 relative-position q-pl-xs">
-        <q-carousel swipeable animated v-model="slide" thumbnails infinite>
-          <!-- <q-carousel-slide :name="1" img-src="https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fwp-content%2Fblogs.dir%2F6%2Ffiles%2F2021%2F06%2Fapple-iphone-14-cheapest-series-model-rumor-info-0.jpg?w=960&cbr=1&q=90&fit=max" />
-           <q-carousel-slide :name="2" img-src="https://cdn.vox-cdn.com/thumbor/cPeVH-m_b9pScRXzpCBW-nAHSfw=/0x0:2032x1355/1400x1400/filters:focal(1016x678:1017x679)/cdn.vox-cdn.com/uploads/chorus_asset/file/22863258/akrales_210917_4760_0175.jpg" />
-          <q-carousel-slide :name="3" img-src="https://i0.wp.com/9to5mac.com/wp-content/uploads/sites/6/2022/01/iphone-14-in-hand.jpg?resize=1200%2C628&quality=82&strip=all&ssl=1" />
-          <q-carousel-slide :name="4" img-src="https://www.91-img.com/pictures/136277-v3-samsung-galaxy-a51-mobile-phone-large-1.jpg" /> -->
-          <q-carousel-slide v-for="(img,id) in fotosURL" :key="id" :name="id+1" :img-src="img"></q-carousel-slide>
-
-        </q-carousel>
-
-        <!-- Botones Agregar/ quitar solo se muestra en moviles -->
-        <div class="col-2 absolute-center lt-md">
-          <div>
-            <!-- Agregar archivos el q-file se usa porque solo el boton no funciono -->
-            <q-file
-              class="hidden"
-              v-model="fotosModel"
-              multiple
-              filled accept=".jpg, image/*"
-              ref="files"
-              @update:model-value="obtenerURL">
-            </q-file>
-            <q-btn @click="addFoto" class="q-pa-md q-ma-sm" round color="secondary" icon="las la-plus" />
-            <q-btn @click="quitarFotos" class="q-pa-md q-ma-sm" round color="red" icon="las la-minus" />
-            <p class="text-bold text-center">AGREGAR/QUITAR <br> FOTOGRAFIAS</p>
-          </div>
-        </div>
-
-      </div>
-
-    </div> <!-- Fin Fila uno -->
-
-  </fieldset>
-
-     <!-- <nuevas-imagenes ref="ImagesRef" /> Referencia al componente NuevasImagenes.vue ubicado en components -->
-       <!-- <q-btn label="prueba img" @click="guardarImagen" /> -->
+              <!-- Botones Agregar/ quitar solo se muestra en moviles -->
+              <div class="col-2 absolute-center lt-md">
+                <!--<div>-->
+                  <!-- Agregar archivos el q-file se usa porque solo el boton no funciono -->
+                  <q-file
+                    class="hidden"
+                    v-model="fotosModel"
+                    multiple
+                    filled accept=".jpg, image/*"
+                    ref="files"
+                    @update:model-value="obtenerURL">
+                  </q-file>
+                  <q-btn @click="addFoto" class="q-pa-md q-ma-sm" round color="secondary" icon="las la-plus" />
+                  <q-btn @click="quitarFotos" class="q-pa-md q-ma-sm" round color="red" icon="las la-minus" />
+                  <p class="text-bold text-center">AGREGAR/QUITAR <br> FOTOGRAFIAS</p>
+                <!--</div>-->
+              </div>
+            </div>
+          </div> <!-- Fin Fila uno -->
+        </fieldset>
       </div> <!-- Fin Agregar imagenes "Parte Inferior Izquierda" -->
 
       <!-- Inicio Parte inferior derecha -->
       <div class="col-12 col-md-5 q-pa-md-xl order-xs-last">
-
+        <!-- Precio solo para Desktop -->
         <div class="gt-sm q-mx-lg">
           <fieldset>
               <legend>PRECIO</legend>
-              <q-input ref="preciosRef" type="number" bottom-slots v-model="preciosModel" label="Ingrese el precio" label-color="yellow-9"  :dense="dense" :rules="[val => !!val || 'Campo requerido']" >
+              <q-input ref="preciosRef" filled type="number" bottom-slots v-model="preciosModel" label="Ingrese el precio" label-color="yellow-9"  :dense="dense" :rules="[val => !!val || 'Campo requerido']" >
                 <template v-slot:prepend>
                   <q-icon name="las la-dollar-sign" />
                 </template>
-                <template v-slot:append>
-                  <q-icon name="close" @click="text = ''" class="cursor-pointer" />
-                </template>
               </q-input>
-              <q-btn label="PRUEBA" @click="reseteando"></q-btn>
           </fieldset>
         </div>
 
@@ -160,8 +141,6 @@
 <script setup>
 import { ref } from 'vue'
 import DatosNuevos from 'src/components/DatosNuevos.vue'
-// import PrecioNew from 'src/components/PrecioNew.vue'
-// import NuevasImagenes from 'src/components/NuevasImagenes.vue'
 import { collection, addDoc } from '@firebase/firestore'
 import { db } from 'src/boot/database'
 import { useRouter } from 'vue-router'
@@ -186,7 +165,6 @@ const preciosRef = ref(null)
 const DatosRefReseteando = ref(null)
 // MODEL COMPONENTES EXTERNOS
 const preciosModel = ref('')
-// const ImagesRef = ref(null)
 
 // MODEL
 const tituloModel = ref('')
@@ -225,19 +203,13 @@ function triggerNotificando (tipo, mensaje) {
 
 const saveWork = async function () {
   const validDatosNue = DatosRefReseteando.value.validDatosNuev()
-  // const validprecio = preciosRef.value.validPrecio()
+
   valids()
-  // this.prueba()
   DatosRefReseteando.value.validDatosNuev()
-  // preciosRef.value.validPrecio()
-  console.log(valids()[0])
-  console.log('este es el de vendedor ' + valids()[1])
   if (valids()[0] && valids()[1] && valids()[2] && valids()[3] && valids()[4] && validDatosNue[0] && validDatosNue[1] && validDatosNue[2] && validDatosNue[3] && validDatosNue[4]) {
     guardarArticulo()
-    console.log('entre jasta aqui')
   } else {
     console.log('hubo algun problema')
-    // this.notificando('datos requeridos', 'red')
     triggerNotificando('negative', 'Por favor Completa todos los campos requeridos.')
   }
 }
