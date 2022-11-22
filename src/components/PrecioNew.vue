@@ -9,7 +9,7 @@
         <q-icon name="close" @click="text = ''" class="cursor-pointer" />
       </template>
     </q-input>
-    <q-btn label="PRUEBA" @click="reseteando"></q-btn>
+    <!--<q-btn label="PRUEBA" @click="reseteando"></q-btn>-->
   </fieldset>
 </template>
 

@@ -33,11 +33,8 @@
         <div class="col-5">
           <q-input v-model="ramModel" ref="ramRef" class="q-mt-sm" filled label="RAM:" label-color="yellow-9" placeholder="2 GB" :rules="[val => !!val || 'Campo requerido']" />
         </div>
-
       </div>
-
     </q-form>
-    <div class="row q-mt-md"><q-btn @click="resetDatosNuevos" outline color="yellow-9" label="Limpiar" size="md"/></div>
 
   </div>
 </template>
@@ -109,12 +106,6 @@ export default {
     },
 
     obtenerDatosNuevosForm () {
-      console.log('marca : ' + this.marcaModel)
-      console.log('modelo : ' + this.modeloModel)
-      console.log('pantalla : ' + this.pantallaModel)
-      console.log('Sistema : ' + this.Sistema)
-      console.log('ROM : ' + this.romModel)
-      console.log('RAM : ' + this.ramModel)
       const obteniendoDatos = [
         this.marcaModel,
         this.modeloModel,
