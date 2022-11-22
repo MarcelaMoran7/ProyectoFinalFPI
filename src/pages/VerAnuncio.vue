@@ -1,7 +1,8 @@
 <template>
   <q-page>
     <div class="row bg-grey-10">
-      <div class="col-12 col-md-6 q-pl-md-xl q-pt-md-lg">
+      <transition appear enter-active-class="animated flipInY slow" leave-active-class="animated flipOutY slow">
+        <div class="col-12 col-md-6 q-pl-md-xl q-pt-md-lg">
     <q-carousel
       animated
       v-model="slide"
@@ -26,6 +27,9 @@
         -->
     </q-carousel>
       </div>
+
+      </transition>
+
       <div class="col-12 col-md-6 q-pa-md-xl q-pa-sm q-py-lg">
         <span class="label text-white text-bold text-h6"> {{titulo}} </span>
           <div class="q-pt-md">
@@ -65,7 +69,8 @@
         <span class="label text-h4 text-white">DESCRIPCIÓN</span>
       </div>
       <div class="col-1 "></div>
-      <div class="col-12 col-md-5 q-pr-md-md q-pb-md">
+      <transition appear enter-active-class="animated flipInY slow" leave-active-class="animated flipOutY slow">
+        <div class="col-12 col-md-5 q-pr-md-md q-pb-md">
         <fieldset class="q-pa-md text-h6 shadow-3 text-white">
           <p class="label" >Estado: <span class="text-amber-14">{{ estado }}</span></p>
           <p class="label" >Marca: <span class="text-amber-14">{{ marca }}</span></p>
@@ -76,11 +81,17 @@
           <p class="label" >Ram: <span class="text-amber-14">{{ ram }}</span></p>
         </fieldset>
       </div>
-      <div class="col-12 col-md-5 q-pl-md-md q-pb-md">
+      </transition>
+
+      <transition appear enter-active-class="animated flipInY slow" leave-active-class="animated flipOutY slow">
+        <div class="col-12 col-md-5 q-pl-md-md q-pb-md">
         <fieldset class="q-pa-md text-h6 shadow-3" style="min-height: 370px">
           <p class="label"><span class="text-amber-14">{{ descripcion }}</span></p>
       </fieldset>
       </div>
+
+      </transition>
+
     </div>
 
   </q-page>
