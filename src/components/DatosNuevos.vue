@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md q-mx-md-xl shadow-3">
+  <div class="q-pa-md q-mx-md-xl shadow-3 bg-white">
     <q-form >
       <div class="q-gutter-sm">
         <span class="label"><strong>Estado:</strong></span>
