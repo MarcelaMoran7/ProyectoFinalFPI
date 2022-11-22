@@ -53,8 +53,8 @@
 
     </div>
     <transition appear enter-active-class="animated lightSpeedInRight slow" leave-active-class="animated fadeInDownBig slow">
-      <div class="row q-gutter-xs justify-center q-mt-md">
-      <q-card  class="my-card vtyu col-md-3 col-5 q-pa-sm q-mt-sm shadow-4"
+      <div class="row  q-mt-md">
+      <q-card  class="my-card vtyu border col-md-3 col-6 q-pa-sm q-mt-sm shadow-4"
       v-for="(item,key) in articulos" :key="key">
       <img :src="item.urlImagen">
 
@@ -337,5 +337,9 @@ onMounted(() => {
 
 .vtyu
   border-radius: 2rem
+
+.border
+  margin-right: 0px
+  margin-left: 0px
 
 </style>
