@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="bg-grey-2">
 
     <h4 class="text-center text-yellow-9 q-ma-md">Nuevo Anuncio</h4>
 
