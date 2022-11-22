@@ -49,7 +49,7 @@
       <!--Inicio, Agregar imagenes del nuevo producto "parte inferior izquierda" -->
       <div class="col-12 col-md-7 order-xs-first order-md-last">
 
-        <fieldset class="q-pa-md q-mx-md-xl q-mt-md-md shadow-3">
+        <fieldset class="q-pa-md q-mx-md-xl q-mt-md-md shadow-3 ">
     <legend>IMAGENES</legend>
 
     <!-- Inicio Fila uno -->

@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div class="row">
+    <div class="row bg-grey-10">
       <div class="col-12 col-md-6 q-pl-md-xl q-pt-md-lg">
     <q-carousel
       animated
@@ -27,9 +27,9 @@
     </q-carousel>
       </div>
       <div class="col-12 col-md-6 q-pa-md-xl q-pa-sm q-py-lg">
-        <span class="label text-dark text-bold text-h6"> {{titulo}} </span>
+        <span class="label text-white text-bold text-h6"> {{titulo}} </span>
           <div class="q-pt-md">
-            <span class="label text-h4 text-bold gt-sm"> {{precio}} </span>
+            <span class="label text-white text-h4 text-bold gt-sm"> {{precio}} </span>
           </div>
           <!-- Para pantallas Moviles -->
           <div class="q-pt-md text-center lt-md">
@@ -37,7 +37,7 @@
           </div>
 
           <div class="q-py-md">
-            <q-btn color="secondary q-pa-md q-px-lg gt-sm" glossy label="Comprar" />
+            <q-btn color="yellow-13 q-pa-md q-px-lg gt-sm" glossy label="Comprar" />
             <q-page-sticky class="lt-md" position="bottom" :offset="[0, 5]" >
             <q-btn to="/" color="primary" glossy class="rotate-0 q-pa-md q-px-lg" label="Inicio" />
             <q-btn color="secondary" glossy class="rotate-0 q-pa-md q-px-lg" label="Comprar" />
@@ -49,12 +49,12 @@
           <fieldset>
           <div class="row">
             <div class="col-7">
-              <span class="label">
+              <span class="label text-white">
                 Vendedor: {{vendedor}}
               </span>
             </div>
             <div class="col-5">
-              <span class="label ">
+              <span class="label text-white">
                 Telefono: {{telefono}}
               </span>
             </div>
@@ -62,11 +62,11 @@
           </fieldset>
       </div>
       <div class="col-12 q-pa-lg text-center gt-sm">
-        <span class="label text-h4">DESCRIPCIÓN</span>
+        <span class="label text-h4 text-white">DESCRIPCIÓN</span>
       </div>
       <div class="col-1 "></div>
       <div class="col-12 col-md-5 q-pr-md-md q-pb-md">
-        <fieldset class="q-pa-md text-h6 shadow-3">
+        <fieldset class="q-pa-md text-h6 shadow-3 text-white">
           <p class="label" >Estado: <span class="text-amber-14">{{ estado }}</span></p>
           <p class="label" >Marca: <span class="text-amber-14">{{ marca }}</span></p>
           <p class="label" >Modelo: <span class="text-amber-14">{{ modelo }}</span></p>
