@@ -42,8 +42,8 @@
             <q-btn to="/" color="primary" glossy class="rotate-0 q-pa-md q-px-lg" label="Inicio" />
             <q-btn color="secondary" glossy class="rotate-0 q-pa-md q-px-lg" label="Comprar" />
             <!--<q-btn label="Probando" @click="listarDatos" />-->
-            <q-btn label="ProbandDOc" @click="listarDocumento" />
-            <!--<q-btn label="cargarIMG" @click="cargarImagenes"  />-->
+            <!--<q-btn label="ProbandDOc" @click="listarDocumento" />
+            <q-btn label="cargarIMG" @click="cargarImagenes"  />-->
           </q-page-sticky>
           </div>
           <fieldset>
@@ -88,12 +88,17 @@
 
 <script setup>
 
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 // import { useCounterStore } from 'stores/dataglobal'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from 'src/boot/database'
 
 import { getStorage, ref as refStorage, listAll, getDownloadURL } from 'firebase/storage'
+
+// import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const idarticulo = ref('')
 
 const storage = getStorage()
 const UrlImagenes = ref([])
@@ -116,7 +121,7 @@ const ram = ref(null)
 const descripcion = ref(null)
 
 // const datos = ref([])
-const idArticle = ref('sJIyZSfji6tuJDG5jgLi')
+// const idArticle = ref('sJIyZSfji6tuJDG5jgLi')
 // METODOS
 
 /** const listarDatos = async function () {
@@ -132,7 +137,7 @@ const idArticle = ref('sJIyZSfji6tuJDG5jgLi')
 
 // oq6BGo61XEKHQPzA9Y4Y   sJIyZSfji6tuJDG5jgLi
 const listarDocumento = async function () {
-  const docRef = doc(db, 'anuncio', idArticle.value)
+  const docRef = doc(db, 'anuncio', idarticulo.value)
   const docSnap = await getDoc(docRef)
 
   if (docSnap.exists()) {
@@ -161,7 +166,7 @@ const listarDocumento = async function () {
 function cargarImagenes () {
   console.log('Cargar Imagenes')
   // Create a reference under which you want to list
-  const listRef = refStorage(storage, idArticle.value)
+  const listRef = refStorage(storage, idarticulo.value)
 
   // Find all the prefixes and items.
   listAll(listRef)
@@ -195,5 +200,10 @@ function cargarImagenes () {
       // Uh-oh, an error occurred!
     })
 }
+
+onMounted(() => {
+  idarticulo.value = route.params.idArticulo
+  listarDocumento()
+})
 
 </script>

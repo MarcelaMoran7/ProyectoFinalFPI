@@ -1,6 +1,6 @@
 <template lang="">
   <div class="row">
-    <h6>{{idarticulo}}</h6>
+    <h1>{{idarticulo}}</h1>
 
   </div>
 </template>
