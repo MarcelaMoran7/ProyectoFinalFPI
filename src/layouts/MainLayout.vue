@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh Lpr lFf">
-    <q-header elevated class="bg-yellow-5" v-if="!mostrarDrawerYHeader || this.$route.path === '/VerAnuncio'">
+    <q-header elevated class="bg-yellow-5"  v-if="mostrarDrawerYHeader">
       <q-toolbar>
         <q-btn
           flat
@@ -10,16 +10,16 @@
           aria-label="Menu"
           color="black"
           @click="toggleLeftDrawer"
-          class="desktop-hide"
-        />
-        <q-avatar class="mobile-hide">
+          class="lt-md"
+        /> <!-- desktop-hide mobile-hide-->
+        <q-avatar class="gt-sm">
           <q-icon name ="las la-bullhorn" size="2rem" color="black"/>
         </q-avatar>
         <transition
         appear
         enter-active-class="animated bounceInDown slow"
         leave-active-class="animated flipOutY slow">
-       <q-toolbar-title class="text-dark mobile-hide" >
+       <q-toolbar-title class="text-dark gt-sm" >
           Tienda CellPhone
         </q-toolbar-title>
 
@@ -33,11 +33,12 @@
         </q-input>
         <q-space />
 
-        <q-btn to="/" class=" q-ma-md mobile-hide" color="blue-grey-3" label="Inicio" />
+        <!-- mobile-hide -->
+        <q-btn to="/" class=" q-ma-md gt-sm" color="blue-grey-3" label="Inicio" />
         <q-space />
 
-        <q-btn :to="'/Newad'" class=" q-ma-sm mobile-hide" round color="blue-grey-3" icon="las la-plus" />
-        <div><q-btn :to="'/VerAnuncio'" class=" q-ma-sm mobile-hide" flat round color="dark" icon="shopping_cart" size="20px"/></div>
+        <q-btn :to="'/Newad'" class=" q-ma-sm gt-sm" round color="blue-grey-3" icon="las la-plus" />
+        <div><q-btn :to="'/VerAnuncio'" class=" q-ma-sm gt-sm" flat round color="dark" icon="shopping_cart" size="20px"/></div>
       </q-toolbar>
     </q-header>
 
@@ -45,9 +46,9 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      v-if="!mostrarDrawerYHeader"
+      v-if="drawerInicio"
     >
-<MenuMobile></MenuMobile>
+      <MenuMobile></MenuMobile>
 
     </q-drawer>
 
@@ -70,7 +71,6 @@ export default defineComponent({
 
   setup () {
     const leftDrawerOpen = ref(false)
-
     return {
       MenuMobile,
       leftDrawerOpen,
@@ -79,15 +79,18 @@ export default defineComponent({
       }
     }
   },
-  methods: {
-
-  },
   computed: {
-    mostrarDrawerYHeader () {
-      return (this.$route.path === '/Newad' && screen.width >= 1023) || (this.$route.path === '/VerAnuncio' && screen.width >= 1023)
+    /* mostrarDrawerYHeader () {
+      return (this.$route.path !== '/Newad' && window.innerWidth >= 1023) || (window.innerWidth < 1023)
     },
     drawerInicio () {
-      return (this.$route.path === '/' && screen.width >= 1023)
+      return (window.innerWidth < 1023)
+    } */
+    mostrarDrawerYHeader () {
+      return (this.$route.path !== '/Newad' && screen.width >= 1023) || (screen.width < 1023)
+    },
+    drawerInicio () {
+      return (screen.width < 1023)
     }
   }
 })

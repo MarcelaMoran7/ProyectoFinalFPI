@@ -131,6 +131,7 @@
         <div class=" q-pa-xs-lg q-gutter-md float-right q-ma-md">
           <q-btn @click="reseteame" class="q-py-md q-px-md " color="red" icon="las la-times-circle" label="Cancelar" />
           <q-btn @click="saveWork" class="q-py-md q-px-md " color="secondary" icon="las la-save" label="Crear" />
+          <q-btn @click="fecha" label="obten Fecha"></q-btn>
         </div>
       </div> <!-- Fin Parte inferior derecha -->
     </div>
@@ -206,12 +207,27 @@ const saveWork = async function () {
 
   valids()
   DatosRefReseteando.value.validDatosNuev()
-  if (valids()[0] && valids()[1] && valids()[2] && valids()[3] && valids()[4] && validDatosNue[0] && validDatosNue[1] && validDatosNue[2] && validDatosNue[3] && validDatosNue[4]) {
+  if ((fotosModel.value !== null) && valids()[0] && valids()[1] && valids()[2] && valids()[3] && valids()[4] && validDatosNue[0] && validDatosNue[1] && validDatosNue[2] && validDatosNue[3] && validDatosNue[4]) {
     guardarArticulo()
   } else {
     console.log('hubo algun problema')
-    triggerNotificando('negative', 'Por favor Completa todos los campos requeridos.')
+    if (fotosModel.value === null && !valids()[0] && !valids()[1] && !valids()[2] && !valids()[3] && !valids()[4] && !validDatosNue[0] && !validDatosNue[1] && !validDatosNue[2] && !validDatosNue[3] && !validDatosNue[4]) {
+      triggerNotificando('negative', 'Error Debes Agregar Al Menos Una Foto Del Producto.')
+      triggerNotificando('negative', 'Por favor Completa Todos Los Campos Requeridos.')
+    } else if (fotosModel.value === null) {
+      triggerNotificando('negative', 'Error Debes Agregar Al Menos Una Foto Del Producto.')
+    } else if (fotosModel.value !== null) {
+      triggerNotificando('negative', 'Por favor Completa Todos Los Campos Requeridos.')
+    }
   }
+}
+
+const fecha = function () {
+  const fecha = Date.now()
+  const hoy = new Date(fecha)
+  const fechaActual = hoy.toLocaleDateString()
+  console.log(hoy.toLocaleDateString())
+  return fechaActual
 }
 
 const guardarArticulo = async function () {
@@ -231,7 +247,8 @@ const guardarArticulo = async function () {
       sistema: datos[3],
       rom: datos[4],
       ram: datos[5],
-      estado: datos[6]
+      estado: datos[6],
+      fecha: fecha()
 
     })
     idArticulo.value = resDB.id
@@ -282,7 +299,6 @@ const rows = ref([])
 
 const subirFotos = function () {
   const storage = getStorage()
-
   fotosModel.value.forEach((foto) => {
     const storageRef = ref2(storage, idArticulo.value + '/' + foto.name)
     uploadBytes(storageRef, foto).then((snapshot) => {

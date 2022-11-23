@@ -103,6 +103,8 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const idarticulo = ref('')
 
+idarticulo.value = route.params.idArticulo
+
 const storage = getStorage()
 const UrlImagenes = ref([])
 
@@ -191,7 +193,6 @@ function cargarImagenes () {
 }
 
 onMounted(() => {
-  idarticulo.value = route.params.idArticulo
   listarDocumento()
 })
 
