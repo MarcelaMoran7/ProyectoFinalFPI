@@ -7,6 +7,7 @@
         color="yellow"
         label="Nuevo"
         left-label
+        class="mobile-hide"
       />
     </div>
 
