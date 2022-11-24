@@ -29,18 +29,18 @@
         <div class="col-12 col-md-6 q-pa-md-xl q-pa-sm q-py-lg">
         <span class="label text-white text-bold text-h6"> {{titulo}} </span>
           <div class="q-pt-md">
-            <span class="label text-white text-h4 text-bold gt-sm"> {{precio}} </span>
+            <span class="label text-white text-h4 text-bold gt-sm text-amber-14"> {{precio}} </span>
           </div>
           <!-- Para pantallas Moviles -->
           <div class="q-pt-md text-center lt-md">
-            <span class="label text-h4 text-bold "> {{precio}} </span>
+            <span class="label text-h4 text-bold text-amber-14 "> {{precio}} </span>
           </div>
 
           <div class="q-py-md">
             <q-btn color="yellow-13 q-pa-md q-px-lg gt-sm" glossy label="Comprar" />
             <q-page-sticky class="lt-md" position="bottom" :offset="[0, 5]" >
             <q-btn to="/" color="primary" glossy class="rotate-0 q-pa-md q-px-lg" label="Inicio" />
-            <q-btn color="yellow-13" glossy class="rotate-0 q-pa-md q-px-lg" label="Comprar" />
+            <q-btn @click="AgregarCarrito" color="yellow-13" glossy class="rotate-0 q-pa-md q-px-lg" label="Comprar" />
           </q-page-sticky>
           </div>
           <fieldset>
@@ -99,12 +99,15 @@ import { ref, onMounted } from 'vue'
 // import { useCounterStore } from 'stores/dataglobal'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from 'src/boot/database'
+import { useQuasar } from 'quasar'
 
 import { getStorage, ref as refStorage, listAll, getDownloadURL } from 'firebase/storage'
 
 // import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
+const $q = useQuasar()
+
 const idarticulo = ref('')
 
 idarticulo.value = route.params.idArticulo
@@ -130,6 +133,17 @@ const ram = ref(null)
 const descripcion = ref(null)
 
 // METODOS
+
+function triggerNotificando (tipo, mensaje) {
+  $q.notify({
+    type: tipo,
+    message: mensaje
+  })
+}
+
+const AgregarCarrito = function () {
+  triggerNotificando('positive', 'Se Agrego Correctamente El Articulo Al Carrito.')
+}
 
 const listarDocumento = async function () {
   const docRef = doc(db, 'anuncio', idarticulo.value)
