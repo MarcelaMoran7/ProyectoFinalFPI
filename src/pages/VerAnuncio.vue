@@ -104,7 +104,7 @@ import { useQuasar } from 'quasar'
 import { getStorage, ref as refStorage, listAll, getDownloadURL } from 'firebase/storage'
 
 // import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
 const $q = useQuasar()
 
@@ -131,7 +131,7 @@ const sistema = ref(null)
 const rom = ref(null)
 const ram = ref(null)
 const descripcion = ref(null)
-
+const router = useRouter()
 // METODOS
 
 function triggerNotificando (tipo, mensaje) {
@@ -143,6 +143,7 @@ function triggerNotificando (tipo, mensaje) {
 
 const AgregarCarrito = function () {
   triggerNotificando('positive', 'Se Agrego Correctamente El Articulo Al Carrito.')
+  router.push('/')
 }
 
 const listarDocumento = async function () {

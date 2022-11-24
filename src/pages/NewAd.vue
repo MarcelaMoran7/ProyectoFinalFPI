@@ -105,7 +105,8 @@
                     multiple
                     filled accept=".jpg, image/*"
                     ref="files"
-                    @update:model-value="obtenerURL">
+                    @update:model-value="obtenerURL"
+                    >
                   </q-file>
                   <q-btn @click="addFoto" class="q-pa-md q-ma-sm" round color="secondary" icon="las la-plus" />
                   <q-btn @click="cancelarFotos" class="q-pa-md q-ma-sm" round color="red" icon="las la-minus" />
