@@ -92,6 +92,11 @@
     Articulos por pagina:<q-select filled v-model="model" :options="options" />
   </div>
   </div>
+  <q-footer elevated>
+        <q-toolbar>
+          <q-toolbar-title>Footer</q-toolbar-title>
+        </q-toolbar>
+      </q-footer>
 
   <q-drawer v-model="leftDrawerOpen"
       show-if-above
