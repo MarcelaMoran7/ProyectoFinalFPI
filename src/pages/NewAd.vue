@@ -79,7 +79,7 @@
                 @update:model-value="obtenerURL">
               </q-file>
               <div><q-btn @click="addFoto" class="q-pa-md q-ma-sm" round color="secondary" icon="las la-plus" /></div>
-              <q-btn @click="quitarFotos" class="q-pa-md q-ma-sm" round color="red" icon="las la-minus" />
+              <q-btn @click="cancelarFotos" class="q-pa-md q-ma-sm" round color="red" icon="las la-minus" />
             </div>
 
             <!-- Tabla de datos solo se muesta en pantallas md hacia arriba -->
@@ -108,7 +108,7 @@
                     @update:model-value="obtenerURL">
                   </q-file>
                   <q-btn @click="addFoto" class="q-pa-md q-ma-sm" round color="secondary" icon="las la-plus" />
-                  <q-btn @click="quitarFotos" class="q-pa-md q-ma-sm" round color="red" icon="las la-minus" />
+                  <q-btn @click="cancelarFotos" class="q-pa-md q-ma-sm" round color="red" icon="las la-minus" />
                   <p class="text-bold text-center">AGREGAR/QUITAR <br> FOTOGRAFIAS</p>
                 <!--</div>-->
               </div>
@@ -302,6 +302,14 @@ const columns = [
 ]
 
 const rows = ref([])
+
+const cancelarFotos = function () {
+  if (fotosModel.value !== null) {
+    fotosModel.value = null
+    fotosURL.value = []
+    rows.value = []
+  }
+}
 
 const subirFotos = function () {
   const storage = getStorage()

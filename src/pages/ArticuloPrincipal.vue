@@ -88,8 +88,12 @@
         active-text-color="orange"
       />
   </div>
-  <div class="col-1 q-ma-lg mobile-hide">
-    Articulos por pagina:<q-select filled v-model="model" :options="options" />
+
+  <div class="row">
+    <span>Articulos por pagina:</span>
+  <div class="col-4 q-ma-lg mobile-hide">
+    <q-select filled v-model="model" :options="options" />
+  </div>
   </div>
   </div>
 

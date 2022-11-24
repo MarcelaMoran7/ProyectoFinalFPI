@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh Lpr lFf">
-    <q-header elevated class="bg-yellow-5"  v-if="mostrarDrawerYHeader">
+    <q-header elevated class="bg-yellow-5" v-if="mostrarDrawerYHeader">
       <q-toolbar>
         <q-btn
           flat
@@ -46,10 +46,8 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      v-if="drawerInicio"
-    >
+     v-if="drawerInicio" >  <!-- v-if="drawerInicio"  -->
       <MenuMobile></MenuMobile>
-
     </q-drawer>
 
     <q-page-container>
@@ -95,6 +93,22 @@ export default defineComponent({
   }
 })
 </script>
+
+<!--<script setup>
+import { ref } from 'vue'
+import MenuMobile from 'components/MenuMobile.vue'
+
+const leftDrawerOpen = ref(false)
+leftDrawerOpen.value = !leftDrawerOpen.value
+
+const mostrarDrawerYHeader = function () {
+  return (this.$route.path !== '/Newad' && screen.width >= 1023) || (screen.width < 1023)
+}
+const drawerInicio = function () {
+  return (screen.width < 1023)
+}
+</script>-->
+
 <style lang="sass">
 .GPL
 
