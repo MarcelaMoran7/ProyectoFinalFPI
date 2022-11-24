@@ -40,7 +40,7 @@
             <q-btn color="yellow-13 q-pa-md q-px-lg gt-sm" glossy label="Comprar" />
             <q-page-sticky class="lt-md" position="bottom" :offset="[0, 5]" >
             <q-btn to="/" color="primary" glossy class="rotate-0 q-pa-md q-px-lg" label="Inicio" />
-            <q-btn @click="AgregarCarrito" color="secondary" glossy class="rotate-0 q-pa-md q-px-lg" label="Comprar" />
+            <q-btn @click="AgregarCarrito" color="yellow-13" glossy class="rotate-0 q-pa-md q-px-lg" label="Comprar" />
           </q-page-sticky>
           </div>
           <fieldset>

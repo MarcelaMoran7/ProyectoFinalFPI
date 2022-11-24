@@ -94,11 +94,14 @@
     <q-select filled v-model="model" :options="options" />
   </div>
   </div>
-  <q-footer elevated>
-        <q-toolbar>
-          <q-toolbar-title>Footer</q-toolbar-title>
-        </q-toolbar>
-      </q-footer>
+
+  <q-footer bordered class="bg-yellow-5 text-dark">
+    <q-tabs no-caps active-color="primary" indicator-color="transparent" class="text-grey-10" v-model="tab">
+        <q-tab name="images" label="Integrantes:" />
+        <q-tab name="videos" label="Marcela Yaneth Moran Flamenco (MF19026)" />
+        <q-tab name="articles" label="Kevin Armando Dominguez Zuniga (DZ15004)" />
+    </q-tabs>
+  </q-footer>
 
   <q-drawer v-model="leftDrawerOpen"
       show-if-above
