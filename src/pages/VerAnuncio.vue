@@ -37,7 +37,7 @@
           </div>
 
           <div class="q-py-md">
-            <q-btn color="yellow-13 q-pa-md q-px-lg gt-sm" glossy label="Comprar" />
+            <q-btn  @click="AgregarCarrito" color="yellow-13 q-pa-md q-px-lg gt-sm" glossy label="Comprar" />
             <q-page-sticky class="lt-md" position="bottom" :offset="[0, 5]" >
             <q-btn to="/" color="primary" glossy class="rotate-0 q-pa-md q-px-lg" label="Inicio" />
             <q-btn @click="AgregarCarrito" color="yellow-13" glossy class="rotate-0 q-pa-md q-px-lg" label="Comprar" />
@@ -104,7 +104,7 @@ import { useQuasar } from 'quasar'
 import { getStorage, ref as refStorage, listAll, getDownloadURL } from 'firebase/storage'
 
 // import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
 const $q = useQuasar()
 
@@ -131,7 +131,7 @@ const sistema = ref(null)
 const rom = ref(null)
 const ram = ref(null)
 const descripcion = ref(null)
-
+const router = useRouter()
 // METODOS
 
 function triggerNotificando (tipo, mensaje) {
@@ -143,6 +143,7 @@ function triggerNotificando (tipo, mensaje) {
 
 const AgregarCarrito = function () {
   triggerNotificando('positive', 'Se Agrego Correctamente El Articulo Al Carrito.')
+  router.push('/')
 }
 
 const listarDocumento = async function () {

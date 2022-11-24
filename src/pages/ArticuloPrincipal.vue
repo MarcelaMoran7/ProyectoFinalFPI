@@ -96,10 +96,18 @@
   </div>
 
   <q-footer bordered class="bg-yellow-5 text-dark">
-    <q-tabs no-caps active-color="primary" indicator-color="transparent" class=" text-grey-10" >
-        <q-tab  label="Integrantes:" class="col-4 col-md-4" />
-        <q-tab label="Marcela Yaneth Moran Flamenco (MF19026)" class="col-4 col-md-4"/>
-        <q-tab label="Kevin Armando Dominguez Zuniga (DZ15004)" class="col-4 col-md-4"/>
+    <q-tabs no-caps active-color="primary" indicator-color="transparent" class="text-grey-10" v-model="tab">
+      <div class="row">
+        <div class="col-12 col-md-2">
+          <q-tab name="images" label="Integrantes:" />
+        </div>
+        <div class="col-12 col-md-5">
+          <q-tab name="videos" label="Marcela Yaneth Moran Flamenco (MF19026)" />
+        </div>
+        <div class="col-12 col-md-5">
+          <q-tab name="articles" label="Kevin Armando Dominguez Zuniga (DZ15004)" />
+        </div>
+      </div>
     </q-tabs>
   </q-footer>
 

@@ -105,7 +105,8 @@
                     multiple
                     filled accept=".jpg, image/*"
                     ref="files"
-                    @update:model-value="obtenerURL">
+                    @update:model-value="obtenerURL"
+                    >
                   </q-file>
                   <q-btn @click="addFoto" class="q-pa-md q-ma-sm" round color="secondary" icon="las la-plus" />
                   <q-btn @click="cancelarFotos" class="q-pa-md q-ma-sm" round color="red" icon="las la-minus" />
@@ -137,7 +138,7 @@
         <div class=" q-pa-xs-lg q-gutter-md float-right q-ma-md">
           <q-btn @click="reseteame" class="q-py-md q-px-md " color="red" icon="las la-times-circle" label="Cancelar" />
           <q-btn @click="saveWork" class="q-py-md q-px-md " color="secondary" icon="las la-save" label="Crear" />
-          <q-btn @click="fecha" label="obten Fecha"></q-btn>
+          <!--<q-btn @click="fecha" label="obten Fecha"></q-btn>-->
         </div>
       </div> <!-- Fin Parte inferior derecha -->
     </div>
@@ -273,6 +274,7 @@ const slide = ref(1)
 const fotosModel = ref(null)
 const fotosURL = ref([])
 const objetoFotos = ref([])
+const indice = ref(null)
 
 const files = ref(null)
 const contaImg = ref(0)
@@ -304,10 +306,17 @@ const columns = [
 const rows = ref([])
 
 const cancelarFotos = function () {
+  console.log(slide.value + ' ' + indice.value)
   if (fotosModel.value !== null) {
-    fotosModel.value = null
-    fotosURL.value = []
-    rows.value = []
+    indice.value = slide.value
+    if (indice.value !== -1) {
+      fotosModel.value.splice(indice.value - 1, 1)
+      // rows.value.splice(indice.value - 1, 1)
+      fotosURL.value = []
+      rows.value = []
+      slide.value = 1
+      obtenerURL()
+    }
   }
 }
 
@@ -345,15 +354,16 @@ function obtenerURL () {
         {
           N: index + 1,
           tamaño: (Math.round(((fotosModel.value[index].size) / 1024)) + ' KB'),
-          tipo: ((fotosModel.value[index].name).substr(-3))
+          // tipo: ((fotosModel.value[index].name).substr(-3))
+          tipo: ((fotosModel.value[index].type).split('/')[1])
         }
       )
       objetoFotos.value.push(fotosModel.value[index])
-      console.log(fotosModel.value[index])
+      /* console.log(fotosModel.value[index])
       console.log('Nombre : ' + (fotosModel.value[index].name))
       console.log('Tipo : ' + (fotosModel.value[index].name).substr(-3))
       console.log('Tamaño : ' + (Math.round(((fotosModel.value[index].size) / 1024)) + ' KB'))
-      console.log('Estas es la prube ')
+      console.log('Estas es la prube ') */
     })
   }
 }
