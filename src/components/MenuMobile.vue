@@ -20,7 +20,7 @@
   <q-separator color="orange" inset />
 
   <q-item class="text-center ">
-    <q-item-section><q-btn to="/VerAnuncio" stretch flat label="Carrito" /></q-item-section>
+    <q-item-section><q-btn  stretch flat label="Carrito" /></q-item-section>
   </q-item>
   <q-separator color="orange" inset />
 </template>
