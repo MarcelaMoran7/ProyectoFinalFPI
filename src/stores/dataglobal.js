@@ -7,7 +7,7 @@ export const useCounterStore = defineStore('dataglobal', {
     filtroSistemas: [],
     filtroPantallas: [],
     currentPage: 1,
-    divideArray: [],
+    dividedArray: [],
     articlesPerPage: 8,
     articles: [],
     articlesEditable: [],

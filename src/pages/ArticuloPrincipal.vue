@@ -54,9 +54,9 @@
 
     </div>
     <transition appear enter-active-class="animated lightSpeedInRight slow" leave-active-class="animated fadeInDownBig slow">
-      <div class="row  q-mt-md">
-      <q-card  class="my-card vtyu border col-md-3 col-6 q-pa-sm q-mt-sm shadow-4"
-      v-for="(item,key) in articulos" :key="key">
+        <div class="row  q-mt-md">
+      <q-card  class="my-card vtyu  col-md-3 col-6 q-pa-sm q-mt-sm shadow-4"
+      v-for="(item,key) in articulos" :key="key" >
       <img :src="item.urlImagen">
 
       <q-card-section>
@@ -96,10 +96,10 @@
   </div>
 
   <q-footer bordered class="bg-yellow-5 text-dark">
-    <q-tabs no-caps active-color="primary" indicator-color="transparent" class="text-grey-10" v-model="tab">
-        <q-tab name="images" label="Integrantes:" />
-        <q-tab name="videos" label="Marcela Yaneth Moran Flamenco (MF19026)" />
-        <q-tab name="articles" label="Kevin Armando Dominguez Zuniga (DZ15004)" />
+    <q-tabs no-caps active-color="primary" indicator-color="transparent" class=" text-grey-10" >
+        <q-tab  label="Integrantes:" class="col-4 col-md-4" />
+        <q-tab label="Marcela Yaneth Moran Flamenco (MF19026)" class="col-4 col-md-4"/>
+        <q-tab label="Kevin Armando Dominguez Zuniga (DZ15004)" class="col-4 col-md-4"/>
     </q-tabs>
   </q-footer>
 
@@ -350,7 +350,7 @@ onMounted(() => {
   border-radius: 2rem
 
 .border
-  margin-right: 0px
-  margin-left: 0px
+  max-width: 600px
+  max-height: 1024px
 
 </style>
