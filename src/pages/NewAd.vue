@@ -137,7 +137,7 @@
         <div class=" q-pa-xs-lg q-gutter-md float-right q-ma-md">
           <q-btn @click="reseteame" class="q-py-md q-px-md " color="red" icon="las la-times-circle" label="Cancelar" />
           <q-btn @click="saveWork" class="q-py-md q-px-md " color="secondary" icon="las la-save" label="Crear" />
-          <q-btn @click="fecha" label="obten Fecha"></q-btn>
+          <!--<q-btn @click="fecha" label="obten Fecha"></q-btn>-->
         </div>
       </div> <!-- Fin Parte inferior derecha -->
     </div>
