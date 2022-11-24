@@ -89,11 +89,9 @@
       />
   </div>
 
-  <div class="row">
-    <span>Articulos por pagina:</span>
-  <div class="col-4 q-ma-lg mobile-hide">
+  <div class="col-12 col-md-3 q-py-xl q-ma-none text-center gt-sm"><span>Articulos por Pagina:</span></div>
+  <div class="col-12 col-md-1 q-my-lg gt-sm">
     <q-select filled v-model="model" :options="options" />
-  </div>
   </div>
   </div>
   <q-footer elevated>
